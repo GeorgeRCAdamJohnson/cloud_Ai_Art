@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove standalone output for Netlify - use default build
-  // output: 'standalone',
+  // Hybrid approach: support both App Router and Pages Router for API routes
   
   images: {
     domains: ['localhost', 'cloudaiart.netlify.app'],
@@ -33,6 +32,11 @@ const nextConfig = {
   env: {
     HUGGINGFACE_API_TOKEN: process.env.HUGGINGFACE_API_TOKEN || process.env.HUGGINGFACEALL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+  },
+  
+  // Redirect configuration to prefer Pages Router for API routes
+  async redirects() {
+    return []
   },
 }
 

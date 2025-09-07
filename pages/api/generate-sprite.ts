@@ -1,0 +1,121 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import { generateWithAWS } from '../../src/lib/aws-bedrock'
+import { generateWithAzure } from '../../src/lib/azure-ai'
+import { generateWithGoogle } from '../../src/lib/google-ai'
+import { generateWithHuggingFace } from '../../src/lib/huggingface'
+import { generateWithReplicate } from '../../src/lib/replicate'
+import { ImageStorage } from '../../src/lib/imageStorage'
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end()
+    return
+  }
+
+  if (req.method === 'GET') {
+    // Return available services for testing
+    return res.status(200).json({
+      success: true,
+      message: 'AI Sprite Generation API',
+      services: ['aws', 'azure', 'google', 'huggingface', 'replicate'],
+      version: '1.0.0',
+      timestamp: new Date().toISOString()
+    })
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method not allowed' })
+  }
+
+  try {
+    const { prompt, service } = req.body
+
+    console.log(`API called with service: ${service}, prompt: ${prompt}`)
+
+    if (!prompt || !service) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing prompt or service'
+      })
+    }
+
+    // Debug: Check environment variables
+    const hasToken = !!process.env.HUGGINGFACE_API_TOKEN
+    console.log('Environment check:', { hasToken })
+    if (process.env.HUGGINGFACE_API_TOKEN) {
+      console.log(`Token starts with: ${process.env.HUGGINGFACE_API_TOKEN?.substring(0, 10)}...`)
+    }
+
+    let result
+    
+    switch (service.toLowerCase()) {
+      case 'aws':
+        result = await generateWithAWS(prompt)
+        break
+      case 'azure':
+        result = await generateWithAzure(prompt)
+        break
+      case 'google':
+        result = await generateWithGoogle(prompt)
+        break
+      case 'huggingface':
+        result = await generateWithHuggingFace(prompt)
+        break
+      case 'replicate':
+        result = await generateWithReplicate(prompt)
+        break
+      default:
+        return res.status(400).json({
+          success: false,
+          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate`
+        })
+    }
+
+    if (result?.imageUrl) {
+      // Save the generated image
+      try {
+        const savedImage = await ImageStorage.saveImage(
+          result.imageUrl, 
+          prompt, 
+          service, 
+          result.metadata?.model || 'unknown'
+        )
+        
+        console.log('Image saved:', savedImage.filename)
+        
+        return res.status(200).json({
+          success: true,
+          imageUrl: result.imageUrl,
+          savedImage: savedImage,
+          metadata: result.metadata
+        })
+      } catch (saveError) {
+        console.error('Failed to save image:', saveError)
+        // Still return the generated image even if saving fails
+        return res.status(200).json({
+          success: true,
+          imageUrl: result.imageUrl,
+          metadata: result.metadata,
+          warning: 'Generated successfully but failed to save to gallery'
+        })
+      }
+    } else {
+      throw new Error('No image generated')
+    }
+
+  } catch (error) {
+    console.error('Generation error:', error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    
+    return res.status(500).json({
+      success: false,
+      error: errorMessage,
+      service: req.body?.service || 'unknown'
+    })
+  }
+}
