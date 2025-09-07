@@ -28,12 +28,26 @@ Your project is now configured with:
 ## 🚀 Deployment Steps
 
 ### 1. Environment Variables
+
+#### For Netlify Dashboard:
 In your Netlify dashboard, add:
 ```
 HUGGINGFACE_API_TOKEN = [Your Hugging Face API token here]
 ```
 
-**Get your token from**: https://huggingface.co/settings/tokens
+#### For GitHub Actions (Already Configured):
+✅ You've already added these GitHub Secrets:
+- `HUGGINGFACEALL` - Full access token (recommended for deployment)
+- `HUGGINGFACEREAD` - Read-only access token  
+- `HUGGINGFACEWRITE` - Write access token
+
+**Get your tokens from**: https://huggingface.co/settings/tokens
+
+#### Token Priority:
+The application will use tokens in this order:
+1. `HUGGINGFACE_API_TOKEN` (for local development)
+2. `HUGGINGFACEALL` (for GitHub Actions and production)
+3. `HUGGINGFACEWRITE` (fallback)
 
 ### 2. Deploy Settings
 - **Repository**: GeorgeRCAdamJohnson/cloud_Ai_Art
