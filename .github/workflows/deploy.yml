@@ -36,8 +36,12 @@ jobs:
     - name: Install Netlify CLI
       run: npm install -g netlify-cli
       
-    - name: Deploy to Netlify with Environment Variables
+    - name: Deploy to Netlify
       run: |
-        netlify deploy --prod --dir=.next --site=22fe0741-d224-44ea-bed3-88a0be2ddaca --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}
+        netlify deploy --prod --dir=.next --site=22fe0741-d224-44ea-bed3-88a0be2ddaca
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        HUGGINGFACE_API_TOKEN: ${{ secrets.HUGGINGFACEALL }}
+        HUGGINGFACEALL: ${{ secrets.HUGGINGFACEALL }}
+        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        NODE_ENV: production

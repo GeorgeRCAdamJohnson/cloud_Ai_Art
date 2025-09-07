@@ -1,12 +1,15 @@
 [build]
-  command = "npm run build"
   publish = ".next"
+  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--production=false"
-  # Environment variables are injected by GitHub Actions during build
-  # They're baked into the build, not needed at runtime
+  # Environment variables are provided by GitHub Actions during build
+  HUGGINGFACE_API_TOKEN = ""
+  HUGGINGFACEALL = ""
+  NEXTAUTH_SECRET = ""
+  NODE_ENV = "production"
 
 # Next.js serverless functions
 [functions]
