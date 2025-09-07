@@ -1,16 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Netlify-specific configuration
+  output: 'standalone',
+  
   images: {
     domains: ['localhost', 'cloudaiart.netlify.app'],
     unoptimized: true
   },
-  trailingSlash: true,
-  distDir: '.next',
-  // Configure for Netlify deployment - no target needed in Next.js 14+
+  
+  trailingSlash: false,
+  
+  // Essential for Netlify deployment
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },
-  // Optimize for Netlify deployment
+  
+  // CORS headers for API routes
   async headers() {
     return [
       {
@@ -22,6 +27,12 @@ const nextConfig = {
         ],
       },
     ]
+  },
+  
+  // Environment variables configuration
+  env: {
+    HUGGINGFACE_API_TOKEN: process.env.HUGGINGFACE_API_TOKEN || process.env.HUGGINGFACEALL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
 }
 

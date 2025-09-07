@@ -33,15 +33,16 @@ jobs:
         NEXTAUTH_URL: https://cloudaiart.netlify.app
         NODE_ENV: production
         
-    - name: Install Netlify CLI
-      run: npm install -g netlify-cli
-      
     - name: Deploy to Netlify
-      run: |
-        netlify deploy --prod --dir=.next --site=22fe0741-d224-44ea-bed3-88a0be2ddaca
+      uses: nwtgck/actions-netlify@v3.0
+      with:
+        publish-dir: '.next'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        HUGGINGFACE_API_TOKEN: ${{ secrets.HUGGINGFACEALL }}
-        HUGGINGFACEALL: ${{ secrets.HUGGINGFACEALL }}
-        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-        NODE_ENV: production
+        NETLIFY_SITE_ID: 22fe0741-d224-44ea-bed3-88a0be2ddaca
