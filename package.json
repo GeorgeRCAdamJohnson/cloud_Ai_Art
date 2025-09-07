@@ -9,7 +9,8 @@
     "lint": "next lint",
     "export": "next export",
     "netlify": "npm run build && npm run export",
-    "deploy-check": "node scripts/deploy-check.js"
+    "deploy-check": "node scripts/deploy-check.js",
+    "deploy-manual": "node scripts/deploy-manual.js"
   },
   "dependencies": {
     "axios": "^1.11.0",
@@ -19,6 +20,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.13.0",
     "@types/node": "^20.19.13",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",

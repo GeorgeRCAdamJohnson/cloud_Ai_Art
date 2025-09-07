@@ -6,25 +6,30 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--production=false"
 
-# Next.js API routes as Netlify Functions
+# Next.js serverless functions
+[functions]
+  directory = ".netlify/functions/"
+  node_bundler = "esbuild"
+
+# Essential plugin for Next.js
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# API routes handling - this is crucial for Next.js API routes
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/___netlify-handler"
   status = 200
 
-# SPA fallback for client-side routing
+# Fallback for all other routes to handle client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-[functions]
-  directory = ".netlify/functions/"
-  node_bundler = "esbuild"
-
-# Optimize for Next.js
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Environment variables that need to be set in Netlify dashboard
+[build.environment]
+  NEXT_PRIVATE_TARGET = "serverless"
 
 # Security headers
 [[headers]]

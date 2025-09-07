@@ -6,8 +6,9 @@ const nextConfig = {
   },
   trailingSlash: true,
   distDir: '.next',
+  // Configure for Netlify deployment - no target needed in Next.js 14+
   experimental: {
-    outputFileTracingRoot: '.',
+    outputFileTracingRoot: process.cwd(),
   },
   // Optimize for Netlify deployment
   async headers() {
