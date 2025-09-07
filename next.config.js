@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Netlify-specific configuration
-  output: 'standalone',
+  // Remove standalone output for Netlify - use default build
+  // output: 'standalone',
   
   images: {
     domains: ['localhost', 'cloudaiart.netlify.app'],
