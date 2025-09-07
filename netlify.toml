@@ -11,16 +11,12 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Functions configuration for Next.js App Router
+# Functions configuration for Next.js Pages Router
 [functions]
   directory = ".netlify/functions"
   node_bundler = "esbuild"
 
-# API routes handling for Next.js App Router
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/___netlify-handler"
-  status = 200
+# API routes handling for Next.js Pages Router - let @netlify/plugin-nextjs handle automatically
 
 # Fallback for client-side routing
 [[redirects]]
