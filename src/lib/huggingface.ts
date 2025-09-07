@@ -77,22 +77,24 @@ export async function generateWithHuggingFace(prompt: string): Promise<Generatio
   } catch (error) {
     console.error('Hugging Face generation error:', error)
     
-    if (error.message?.includes('503')) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    
+    if (errorMessage.includes('503')) {
       throw new Error('Hugging Face model is loading. Please wait 20-30 seconds and try again.')
     }
     
-    if (error.message?.includes('429')) {
+    if (errorMessage.includes('429')) {
       throw new Error('Rate limit exceeded. You have used your free quota for today. Try again later.')
     }
     
-    if (error.message?.includes('401')) {
+    if (errorMessage.includes('401')) {
       throw new Error('Invalid Hugging Face API token. Please check your token has the correct permissions.')
     }
 
-    if (error.message?.includes('400')) {
-      throw new Error(`Bad request from Hugging Face API: ${error.message}`)
+    if (errorMessage.includes('400')) {
+      throw new Error(`Bad request from Hugging Face API: ${errorMessage}`)
     }
 
-    throw new Error(`Hugging Face failed: ${error.message}`)
+    throw new Error(`Hugging Face failed: ${errorMessage}`)
   }
 }

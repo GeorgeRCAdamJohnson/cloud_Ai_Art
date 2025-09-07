@@ -85,11 +85,16 @@ export async function generateWithReplicate(prompt: string): Promise<GenerationR
   } catch (error) {
     console.error('Replicate generation error:', error)
     
-    if (error.response?.status === 401) {
-      throw new Error('Invalid Replicate API token')
+    // Handle axios errors
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response?: { status?: number } }
+      if (axiosError.response?.status === 401) {
+        throw new Error('Invalid Replicate API token')
+      }
     }
     
-    throw new Error(`Replicate error: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    throw new Error(`Replicate error: ${errorMessage}`)
   }
 }
 

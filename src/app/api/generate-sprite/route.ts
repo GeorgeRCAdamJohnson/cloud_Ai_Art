@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
         console.log(`Image saved: ${savedImage.filename}`)
       }
     } catch (saveError) {
-      console.log('Note: Could not auto-save image:', saveError.message)
+      console.log('Note: Could not auto-save image:', saveError instanceof Error ? saveError.message : String(saveError))
       // Continue anyway - saving is optional
     }
 
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Generation error:', error)
     return NextResponse.json(
-      { success: false, error: error.message || 'Generation failed' },
+      { success: false, error: error instanceof Error ? error.message : 'Generation failed' },
       { status: 500 }
     )
   }
