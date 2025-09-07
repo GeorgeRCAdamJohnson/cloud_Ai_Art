@@ -1,12 +1,12 @@
 [build]
-  publish = ".next"
   command = "npm run build"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--production=false"
-  # Environment variables will be provided by GitHub Actions during build
-  # No need to set them here since Netlify env vars require paid subscription
+  # Environment variables are injected by GitHub Actions during build
+  # They're baked into the build, not needed at runtime
 
 # Next.js serverless functions
 [functions]
