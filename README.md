@@ -197,7 +197,46 @@ npm install
 - Verify API quotas and billing setup
 - Check browser console for detailed errors
 
-## 📖 API Documentation
+## � Deployment
+
+### **FREE Deployment with GitHub Actions**
+
+Since Netlify environment variables require a paid subscription, we use **GitHub Secrets** (completely free) with automatic deployment:
+
+#### **Step 1: Set Up GitHub Secrets**
+1. Go to your GitHub repository settings
+2. Navigate to **Secrets and variables** → **Actions**
+3. Add these repository secrets:
+
+```
+HUGGINGFACEALL: [Your Hugging Face API Token from .env.local]
+NEXTAUTH_SECRET: cloud-ai-art-secret-2025-netlify-production
+NETLIFY_AUTH_TOKEN: [Your Netlify Personal Access Token]
+```
+
+#### **Step 2: Get Netlify Auth Token**
+1. Visit: https://app.netlify.com/user/applications#personal-access-tokens
+2. Create new token: "GitHub Actions Deploy"
+3. Copy token and add as `NETLIFY_AUTH_TOKEN` secret
+
+#### **Step 3: Deploy**
+```bash
+# Quick setup helper
+npm run setup-github-secrets
+
+# Push to trigger deployment
+git push origin main
+```
+
+#### **✅ Benefits**
+- **Completely FREE** - No paid Netlify subscription needed
+- **Automatic deployment** on every push to main
+- **Secure environment variables** stored in GitHub
+- **Proper API route handling** as serverless functions
+
+**📖 Detailed guide**: [`GITHUB_SECRETS_SETUP.md`](./GITHUB_SECRETS_SETUP.md)
+
+## �📖 API Documentation
 
 ### Generate Sprite Endpoint
 ```

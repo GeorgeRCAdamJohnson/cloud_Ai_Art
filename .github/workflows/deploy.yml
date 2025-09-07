@@ -27,6 +27,11 @@ jobs:
       run: npm run build
       env:
         HUGGINGFACE_API_TOKEN: ${{ secrets.HUGGINGFACEALL }}
+        HUGGINGFACEALL: ${{ secrets.HUGGINGFACEALL }}
+        HUGGINGFACEWRITE: ${{ secrets.HUGGINGFACEALL }}
+        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        NEXTAUTH_URL: https://cloudaiart.netlify.app
+        NODE_ENV: production
         
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v3.0
@@ -38,6 +43,12 @@ jobs:
         enable-pull-request-comment: false
         enable-commit-comment: true
         overwrites-pull-request-comment: true
+        functions-dir: '.next/server/pages/api'
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: 22fe0741-d224-44ea-bed3-88a0be2ddaca
+        HUGGINGFACE_API_TOKEN: ${{ secrets.HUGGINGFACEALL }}
+        HUGGINGFACEALL: ${{ secrets.HUGGINGFACEALL }}
+        NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        NEXTAUTH_URL: https://cloudaiart.netlify.app
+        NODE_ENV: production

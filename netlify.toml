@@ -5,6 +5,8 @@
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--production=false"
+  # Environment variables will be provided by GitHub Actions during build
+  # No need to set them here since Netlify env vars require paid subscription
 
 # Next.js serverless functions
 [functions]
@@ -27,9 +29,10 @@
   to = "/index.html"
   status = 200
 
-# Environment variables that need to be set in Netlify dashboard
-[build.environment]
-  NEXT_PRIVATE_TARGET = "serverless"
+# GitHub Actions provides environment variables during build
+# No Netlify environment variables needed (requires paid subscription)
+# [build.environment]
+#   NEXT_PRIVATE_TARGET = "serverless"
 
 # Security headers
 [[headers]]
