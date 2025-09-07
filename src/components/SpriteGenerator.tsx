@@ -47,7 +47,8 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
           prompt,
           imageUrl: data.imageUrl,
           service: selectedService,
-          timestamp: new Date()
+          timestamp: new Date(),
+          saved: data.saved // Include save info
         })
       }
     } catch (error) {

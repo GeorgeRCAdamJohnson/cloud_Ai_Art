@@ -1,4 +1,4 @@
-// Hugging Face Stable Diffusion - COMPLETELY FREE
+// Hugging Face Inference Providers - COMPLETELY FREE
 // Get API key: huggingface.co → Settings → Access Tokens → New Token
 
 export interface GenerationResult {
@@ -8,47 +8,77 @@ export interface GenerationResult {
 
 export async function generateWithHuggingFace(prompt: string): Promise<GenerationResult> {
   try {
-    // This is a mock implementation for demo purposes
-    // To use real Hugging Face API:
-    // 1. Get free API key from huggingface.co
-    // 2. Replace this mock with real implementation from real-implementations/huggingface-real.ts
+    const apiToken = process.env.HUGGINGFACE_API_TOKEN
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    if (!apiToken) {
+      throw new Error('Hugging Face API token not configured. Please set HUGGINGFACE_API_TOKEN in your .env.local file.')
+    }
+
+    // Using the new Hugging Face Inference Providers API
+    // With a reliable text-to-image model
+    const apiUrl = 'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell'
     
-    // Generate a simple colored square with the prompt as demo
-    const canvas = createMockCanvas(prompt, '#FCD34D')
-    
-    return {
-      imageUrl: canvas,
-      metadata: {
-        service: 'huggingface',
-        model: 'stable-diffusion-2-1 (mock)',
-        prompt,
-        cost: 'FREE',
-        timestamp: new Date().toISOString()
+    const enhancedPrompt = `${prompt}, 2D game sprite, cartoon style, colorful, cute, friendly, simple background, kids game character`
+
+    console.log('Generating with Hugging Face FLUX.1-schnell:', enhancedPrompt)
+
+    // Use fetch instead of axios to avoid automatic headers
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        inputs: enhancedPrompt
+      })
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Hugging Face API Error Response:', errorText)
+      throw new Error(`HTTP ${response.status}: ${errorText}`)
+    }
+
+    if (response.ok && response.body) {
+      // Convert the image data to base64
+      const arrayBuffer = await response.arrayBuffer()
+      const imageBase64 = Buffer.from(arrayBuffer).toString('base64')
+      const imageUrl = `data:image/png;base64,${imageBase64}`
+
+      return {
+        imageUrl,
+        metadata: {
+          service: 'huggingface',
+          model: 'FLUX.1-schnell (Fast & Free)',
+          prompt: enhancedPrompt,
+          timestamp: new Date().toISOString(),
+          cost: 'FREE',
+          provider: 'Hugging Face Inference API'
+        }
       }
     }
+
+    throw new Error('No valid response from Hugging Face')
   } catch (error) {
     console.error('Hugging Face generation error:', error)
-    throw new Error('Failed to generate image with Hugging Face')
-  }
-}
+    
+    if (error.message?.includes('503')) {
+      throw new Error('Hugging Face model is loading. Please wait 20-30 seconds and try again.')
+    }
+    
+    if (error.message?.includes('429')) {
+      throw new Error('Rate limit exceeded. You have used your free quota for today.')
+    }
+    
+    if (error.message?.includes('401')) {
+      throw new Error('Invalid Hugging Face API token. Please check your token.')
+    }
 
-function createMockCanvas(text: string, color: string): string {
-  // Create a simple SVG as base64 for demo
-  const svg = `
-    <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-      <rect width="512" height="512" fill="${color}"/>
-      <text x="256" y="256" text-anchor="middle" dominant-baseline="middle" 
-            fill="white" font-family="Arial" font-size="24" font-weight="bold">
-        ${text.substring(0, 20)}...
-      </text>
-      <text x="256" y="300" text-anchor="middle" dominant-baseline="middle" 
-            fill="white" font-family="Arial" font-size="16">
-        🆓 FREE with Hugging Face
-      </text>
-    </svg>
-  `
-  return `data:image/svg+xml;base64,${btoa(svg)}`
+    if (error.message?.includes('400')) {
+      throw new Error(`Bad request from Hugging Face API: ${error.message}`)
+    }
+
+    throw new Error(`Hugging Face failed: ${error.message}`)
+  }
 }
