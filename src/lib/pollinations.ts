@@ -6,7 +6,43 @@ export interface GenerationResult {
   metadata?: any
 }
 
-export async function generateWithPollinations(prompt: string): Promise<GenerationResult> {
+// Available Pollinations.ai models
+export const POLLINATIONS_MODELS = {
+  'flux': {
+    name: 'FLUX',
+    description: 'High-quality, fast generation',
+    recommended: true
+  },
+  'flux-schnell': {
+    name: 'FLUX Schnell',
+    description: 'Ultra-fast generation',
+    speed: 'fastest'
+  },
+  'sd3.5': {
+    name: 'Stable Diffusion 3.5',
+    description: 'Latest SD model, excellent quality',
+    quality: 'highest'
+  },
+  'playground-v2.5': {
+    name: 'Playground v2.5',
+    description: 'Great for artistic styles',
+    style: 'artistic'
+  },
+  'sdxl': {
+    name: 'SDXL',
+    description: 'High resolution generation',
+    resolution: 'high'
+  },
+  'anything-v5': {
+    name: 'Anything v5',
+    description: 'Perfect for anime/cartoon sprites',
+    style: 'cartoon'
+  }
+} as const
+
+export type PollinationsModel = keyof typeof POLLINATIONS_MODELS
+
+export async function generateWithPollinations(prompt: string, model: PollinationsModel = 'flux'): Promise<GenerationResult> {
   try {
     // Enhance prompt for 2D game sprites
     const enhancedPrompt = `${prompt}, 2D game sprite, pixel art style, transparent background, kids friendly, cartoon style, colorful, cute, friendly, simple background, kids game character`
@@ -21,12 +57,13 @@ export async function generateWithPollinations(prompt: string): Promise<Generati
       'width': '512',
       'height': '512',
       'seed': Math.floor(Math.random() * 1000000).toString(),
-      'model': 'flux',
+      'model': model,
       'enhance': 'true'
     })
     
     const fullUrl = `${apiUrl}?${params.toString()}`
     
+    console.log(`Generating with Pollinations.ai ${POLLINATIONS_MODELS[model].name}:`, enhancedPrompt)
     console.log('Pollinations API URL:', fullUrl)
 
     // Test if the image is accessible
@@ -53,11 +90,13 @@ export async function generateWithPollinations(prompt: string): Promise<Generati
       imageUrl: dataUrl,
       metadata: {
         service: 'pollinations',
-        model: 'FLUX',
+        model: POLLINATIONS_MODELS[model].name,
+        modelKey: model,
         prompt: enhancedPrompt,
         timestamp: new Date().toISOString(),
         cost: 'FREE',
-        size: imageBuffer.byteLength
+        size: imageBuffer.byteLength,
+        description: POLLINATIONS_MODELS[model].description
       }
     }
 

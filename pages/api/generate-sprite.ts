@@ -5,6 +5,8 @@ import { generateWithGoogle } from '../../src/lib/google-ai'
 import { generateWithHuggingFace } from '../../src/lib/huggingface'
 import { generateWithReplicate } from '../../src/lib/replicate'
 import { generateWithPollinations } from '../../src/lib/pollinations'
+import { generateWithSegmind } from '../../src/lib/segmind'
+import { generateWithProdia } from '../../src/lib/prodia'
 import { ImageStorage } from '../../src/lib/imageStorage'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,8 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       success: true,
       message: 'AI Sprite Generation API',
-      services: ['aws', 'azure', 'google', 'huggingface', 'replicate', 'pollinations'],
-      freeServices: ['huggingface', 'replicate', 'pollinations'],
+      services: ['aws', 'azure', 'google', 'huggingface', 'replicate', 'pollinations', 'segmind', 'prodia'],
+      freeServices: ['huggingface', 'replicate', 'pollinations', 'segmind', 'prodia'],
       version: '1.0.0',
       timestamp: new Date().toISOString()
     })
@@ -35,9 +37,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { prompt, service } = req.body
+    const { prompt, service = 'pollinations', model } = req.body
 
-    console.log(`API called with service: ${service}, prompt: ${prompt}`)
+    console.log(`Generating sprite with ${service}:`, prompt, 'Model:', model)
 
     if (!prompt || !service) {
       return res.status(400).json({
@@ -72,12 +74,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         result = await generateWithReplicate(prompt)
         break
       case 'pollinations':
-        result = await generateWithPollinations(prompt)
+        result = await generateWithPollinations(prompt, model || 'flux')
+        break
+      case 'segmind':
+        result = await generateWithSegmind(prompt, model || 'sdxl')
+        break
+      case 'prodia':
+        result = await generateWithProdia(prompt, model || 'dreamlike-anime')
         break
       default:
         return res.status(400).json({
           success: false,
-          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate, pollinations`
+          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate, pollinations, segmind, prodia`
         })
     }
 

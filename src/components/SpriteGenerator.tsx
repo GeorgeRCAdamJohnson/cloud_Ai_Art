@@ -1,17 +1,66 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Wand2, Download, Loader2 } from 'lucide-react'
 
 interface SpriteGeneratorProps {
-  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations'
+  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia'
   onSpriteGenerated: (sprite: any) => void
 }
+
+// Model options for each service
+const SERVICE_MODELS = {
+  pollinations: {
+    'flux': { name: 'FLUX', description: 'High quality, balanced' },
+    'flux-schnell': { name: 'FLUX Schnell', description: 'Fast generation' },
+    'sd3.5': { name: 'SD 3.5', description: 'Latest Stable Diffusion' },
+    'playground-v2.5': { name: 'Playground v2.5', description: 'Artistic style' },
+    'sdxl': { name: 'SDXL', description: 'High resolution' },
+    'anything-v5': { name: 'Anything v5', description: 'Anime/cartoon style' }
+  },
+  segmind: {
+    'sdxl': { name: 'SDXL', description: 'High quality, detailed' },
+    'sd1.5': { name: 'SD 1.5', description: 'Classic, reliable' },
+    'kandinsky': { name: 'Kandinsky 2.2', description: 'Artistic, unique' },
+    'deepfloyd': { name: 'DeepFloyd IF', description: 'Text-aware' }
+  },
+  prodia: {
+    'dreamlike-anime': { name: 'Dreamlike Anime', description: 'Perfect for sprites' },
+    'anything-v4': { name: 'Anything V4', description: 'Anime/cartoon style' },
+    'deliberate': { name: 'Deliberate', description: 'High quality' },
+    'v1-5-pruned-emaonly': { name: 'SD 1.5', description: 'Fast, reliable' },
+    'openjourney': { name: 'OpenJourney', description: 'Artistic style' }
+  },
+  huggingface: {
+    'default': { name: 'FLUX.1-schnell', description: 'Fast generation' }
+  },
+  replicate: {
+    'default': { name: 'SDXL', description: 'High quality' }
+  },
+  aws: {
+    'default': { name: 'Stable Diffusion', description: 'Enterprise grade' }
+  },
+  azure: {
+    'default': { name: 'DALL-E', description: 'Microsoft AI' }
+  },
+  google: {
+    'default': { name: 'Imagen', description: 'Google AI' }
+  }
+} as const
 
 export default function SpriteGenerator({ selectedService, onSpriteGenerated }: SpriteGeneratorProps) {
   const [prompt, setPrompt] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
+  const [selectedModel, setSelectedModel] = useState<string>('')
+
+  // Auto-select first model when service changes
+  useEffect(() => {
+    const availableModels = Object.keys(SERVICE_MODELS[selectedService] || {})
+    if (availableModels.length > 0) {
+      setSelectedModel(availableModels[0])
+    }
+  }, [selectedService])
 
   const spritePrompts = [
     "cute cartoon rabbit character for kids game",
@@ -34,7 +83,8 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
         },
         body: JSON.stringify({
           prompt: prompt + " 2D game sprite, pixel art style, transparent background, kids friendly",
-          service: selectedService
+          service: selectedService,
+          model: selectedModel || Object.keys(SERVICE_MODELS[selectedService] || {})[0]
         }),
       })
 
@@ -81,6 +131,32 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
             className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:border-white/50 focus:ring-2 focus:ring-white/20 outline-none resize-none"
             rows={3}
           />
+        </div>
+
+        {/* Model Selection */}
+        <div>
+          <label className="block text-white/80 mb-2">Choose AI Model:</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {Object.entries(SERVICE_MODELS[selectedService] || {}).map(([modelKey, modelInfo]) => (
+              <button
+                key={modelKey}
+                onClick={() => setSelectedModel(modelKey)}
+                className={`p-3 rounded-lg border transition-all duration-200 text-left ${
+                  selectedModel === modelKey
+                    ? 'bg-white/20 border-white/50 ring-2 ring-white/30'
+                    : 'bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30'
+                }`}
+              >
+                <div className="font-medium text-white">{modelInfo.name}</div>
+                <div className="text-sm text-white/70">{modelInfo.description}</div>
+              </button>
+            ))}
+          </div>
+          {!selectedModel && Object.keys(SERVICE_MODELS[selectedService] || {}).length > 0 && (
+            <p className="text-sm text-yellow-300 mt-2">
+              💡 Select a model above or we&apos;ll use the default one
+            </p>
+          )}
         </div>
 
         <div>

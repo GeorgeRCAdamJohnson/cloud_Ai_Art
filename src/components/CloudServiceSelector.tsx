@@ -3,8 +3,8 @@
 import { Cloud, Zap, Shield } from 'lucide-react'
 
 interface CloudServiceSelectorProps {
-  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations'
-  onServiceChange: (service: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations') => void
+  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia'
+  onServiceChange: (service: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia') => void
 }
 
 export default function CloudServiceSelector({ selectedService, onServiceChange }: CloudServiceSelectorProps) {
@@ -16,6 +16,24 @@ export default function CloudServiceSelector({ selectedService, onServiceChange 
       description: 'COMPLETELY FREE - No signup required',
       color: 'bg-green-500',
       features: ['No signup needed', 'Unlimited use', 'FLUX model'],
+      badge: '100% FREE'
+    },
+    {
+      id: 'segmind' as const,
+      name: 'Segmind',
+      icon: Zap,
+      description: 'FREE AI - Multiple Stable Diffusion models',
+      color: 'bg-emerald-500',
+      features: ['No signup needed', 'SDXL model', 'Kandinsky 2.2'],
+      badge: '100% FREE'
+    },
+    {
+      id: 'prodia' as const,
+      name: 'Prodia',
+      icon: Shield,
+      description: 'FREE anime & cartoon style generation',
+      color: 'bg-teal-500',
+      features: ['Perfect for sprites', 'Anime models', 'Fast generation'],
       badge: '100% FREE'
     },
     {
@@ -89,7 +107,7 @@ export default function CloudServiceSelector({ selectedService, onServiceChange 
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-semibold text-white">{service.name}</h3>
                     <span className={`px-2 py-1 text-xs rounded-full ${
-                      service.badge === 'FREE' || service.badge === '$5 FREE' 
+                      service.badge === 'FREE' || service.badge === '$5 FREE' || service.badge === '100% FREE'
                         ? 'bg-green-500 text-white' 
                         : 'bg-white/20 text-white/80'
                     }`}>
