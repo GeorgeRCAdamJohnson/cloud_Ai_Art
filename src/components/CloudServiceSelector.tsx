@@ -3,20 +3,20 @@
 import { Cloud, Zap, Shield } from 'lucide-react'
 
 interface CloudServiceSelectorProps {
-  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate'
-  onServiceChange: (service: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate') => void
+  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations'
+  onServiceChange: (service: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations') => void
 }
 
 export default function CloudServiceSelector({ selectedService, onServiceChange }: CloudServiceSelectorProps) {
   const services = [
     {
-      id: 'huggingface' as const,
-      name: 'Hugging Face',
+      id: 'pollinations' as const,
+      name: 'Pollinations.ai',
       icon: Zap,
-      description: 'FREE AI with Stable Diffusion',
-      color: 'bg-yellow-500',
-      features: ['Completely FREE', '1000/month', 'Good quality'],
-      badge: 'FREE'
+      description: 'COMPLETELY FREE - No signup required',
+      color: 'bg-green-500',
+      features: ['No signup needed', 'Unlimited use', 'FLUX model'],
+      badge: '100% FREE'
     },
     {
       id: 'replicate' as const,
@@ -26,6 +26,15 @@ export default function CloudServiceSelector({ selectedService, onServiceChange 
       color: 'bg-purple-500',
       features: ['$5 free credit', 'SDXL model', 'Excellent quality'],
       badge: '$5 FREE'
+    },
+    {
+      id: 'huggingface' as const,
+      name: 'Hugging Face',
+      icon: Zap,
+      description: 'FREE AI with Stable Diffusion',
+      color: 'bg-yellow-500',
+      features: ['Completely FREE', '1000/month', 'Good quality'],
+      badge: 'FREE'
     },
     {
       id: 'aws' as const,

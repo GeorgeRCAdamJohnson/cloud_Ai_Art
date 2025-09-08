@@ -4,6 +4,7 @@ import { generateWithAzure } from '../../src/lib/azure-ai'
 import { generateWithGoogle } from '../../src/lib/google-ai'
 import { generateWithHuggingFace } from '../../src/lib/huggingface'
 import { generateWithReplicate } from '../../src/lib/replicate'
+import { generateWithPollinations } from '../../src/lib/pollinations'
 import { ImageStorage } from '../../src/lib/imageStorage'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -22,7 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       success: true,
       message: 'AI Sprite Generation API',
-      services: ['aws', 'azure', 'google', 'huggingface', 'replicate'],
+      services: ['aws', 'azure', 'google', 'huggingface', 'replicate', 'pollinations'],
+      freeServices: ['huggingface', 'replicate', 'pollinations'],
       version: '1.0.0',
       timestamp: new Date().toISOString()
     })
@@ -69,40 +71,57 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'replicate':
         result = await generateWithReplicate(prompt)
         break
+      case 'pollinations':
+        result = await generateWithPollinations(prompt)
+        break
       default:
         return res.status(400).json({
           success: false,
-          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate`
+          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate, pollinations`
         })
     }
 
     if (result?.imageUrl) {
-      // Save the generated image
-      try {
-        const savedImage = await ImageStorage.saveImage(
-          result.imageUrl, 
-          prompt, 
-          service, 
-          result.metadata?.model || 'unknown'
-        )
-        
-        console.log('Image saved:', savedImage.filename)
-        
-        return res.status(200).json({
-          success: true,
-          imageUrl: result.imageUrl,
-          savedImage: savedImage,
-          metadata: result.metadata
-        })
-      } catch (saveError) {
-        console.error('Failed to save image:', saveError)
-        // Still return the generated image even if saving fails
+      // Check if we're in a serverless environment (Netlify)
+      const isServerless = process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME
+      
+      if (isServerless) {
+        // Skip saving in serverless environment
+        console.log('Serverless environment detected, skipping file system save')
         return res.status(200).json({
           success: true,
           imageUrl: result.imageUrl,
           metadata: result.metadata,
-          warning: 'Generated successfully but failed to save to gallery'
+          info: 'Generated successfully (serverless mode - no file saving)'
         })
+      } else {
+        // Save the generated image (local development)
+        try {
+          const savedImage = await ImageStorage.saveImage(
+            result.imageUrl, 
+            prompt, 
+            service, 
+            result.metadata?.model || 'unknown'
+          )
+          
+          console.log('Image saved:', savedImage.filename)
+          
+          return res.status(200).json({
+            success: true,
+            imageUrl: result.imageUrl,
+            savedImage: savedImage,
+            metadata: result.metadata
+          })
+        } catch (saveError) {
+          console.error('Failed to save image:', saveError)
+          // Still return the generated image even if saving fails
+          return res.status(200).json({
+            success: true,
+            imageUrl: result.imageUrl,
+            metadata: result.metadata,
+            warning: 'Generated successfully but failed to save to gallery'
+          })
+        }
       }
     } else {
       throw new Error('No image generated')

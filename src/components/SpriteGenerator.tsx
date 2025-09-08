@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Wand2, Download, Loader2 } from 'lucide-react'
 
 interface SpriteGeneratorProps {
-  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate'
+  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations'
   onSpriteGenerated: (sprite: any) => void
 }
 
