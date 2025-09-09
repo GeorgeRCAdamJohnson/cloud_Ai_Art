@@ -503,41 +503,70 @@ export async function generateWithComfyUI(
                   const imageInfo = saveImageOutput.images[0]
                   const imageUrl = `${baseUrl}/view?filename=${imageInfo.filename}&subfolder=${imageInfo.subfolder || ''}&type=${imageInfo.type || 'output'}`
                   
-                  // Fetch the actual image and convert to base64 with better error handling
-                  try {
-                    const imageResponse = await fetch(imageUrl, {
-                      signal: AbortSignal.timeout(10000) // 10 second timeout for image fetch
-                    })
-                    
-                    if (!imageResponse.ok) {
-                      throw new Error(`Failed to fetch image: ${imageResponse.status}`)
-                    }
-                    
-                    const imageBuffer = await imageResponse.arrayBuffer()
-                    const base64Data = Buffer.from(imageBuffer).toString('base64')
-                    const dataUrl = `data:image/png;base64,${base64Data}`
-
-                    console.log('✅ Successfully generated image with ComfyUI')
-                    console.log(`📁 Image size: ${imageBuffer.byteLength} bytes`)
-
-                    return {
-                      imageUrl: dataUrl,
-                      metadata: {
-                        service: 'comfyui-local',
-                        model: COMFYUI_WORKFLOWS[normalizedModel]?.name || normalizedModel,
-                        modelKey: normalizedModel,
-                        prompt: enhancedPrompt,
-                        timestamp: new Date().toISOString(),
-                        cost: 'FREE (Local)',
-                        size: imageBuffer.byteLength,
-                        promptId,
-                        description: COMFYUI_WORKFLOWS[normalizedModel]?.description || 'AI-generated image',
-                        serverUrl: baseUrl
+                  // Fetch the actual image with robust retry logic for connection issues
+                  let imageBuffer: ArrayBuffer | null = null
+                  let lastError: Error | null = null
+                  
+                  // Retry image fetch up to 3 times with increasing timeouts
+                  for (let retryAttempt = 0; retryAttempt < 3; retryAttempt++) {
+                    try {
+                      console.log(`🖼️ Fetching image (attempt ${retryAttempt + 1}/3): ${imageUrl}`)
+                      
+                      const timeoutMs = 15000 + (retryAttempt * 5000) // 15s, 20s, 25s
+                      const imageResponse = await fetch(imageUrl, {
+                        signal: AbortSignal.timeout(timeoutMs),
+                        headers: {
+                          'Connection': 'keep-alive',
+                          'Cache-Control': 'no-cache'
+                        }
+                      })
+                      
+                      if (!imageResponse.ok) {
+                        throw new Error(`HTTP ${imageResponse.status}: ${imageResponse.statusText}`)
+                      }
+                      
+                      imageBuffer = await imageResponse.arrayBuffer()
+                      console.log(`✅ Successfully fetched image: ${imageBuffer.byteLength} bytes`)
+                      break // Success, exit retry loop
+                      
+                    } catch (fetchError) {
+                      lastError = fetchError instanceof Error ? fetchError : new Error(String(fetchError))
+                      console.log(`⚠️ Image fetch attempt ${retryAttempt + 1} failed:`, lastError.message)
+                      
+                      // Wait before retry (except on last attempt)
+                      if (retryAttempt < 2) {
+                        const waitTime = 2000 + (retryAttempt * 1000) // 2s, 3s
+                        console.log(`⏳ Waiting ${waitTime}ms before retry...`)
+                        await new Promise(resolve => setTimeout(resolve, waitTime))
                       }
                     }
-                  } catch (imageError) {
-                    console.log('⚠️ Error fetching generated image:', imageError)
+                  }
+                  
+                  if (!imageBuffer) {
+                    console.log('⚠️ Failed to fetch image after all retries:', lastError?.message)
                     return createComfyUIFallback(prompt, model, 'Generated but failed to fetch image')
+                  }
+                  
+                  const base64Data = Buffer.from(imageBuffer).toString('base64')
+                  const dataUrl = `data:image/png;base64,${base64Data}`
+
+                  console.log('✅ Successfully generated image with ComfyUI')
+                  console.log(`📁 Image size: ${imageBuffer.byteLength} bytes`)
+
+                  return {
+                    imageUrl: dataUrl,
+                    metadata: {
+                      service: 'comfyui-local',
+                      model: COMFYUI_WORKFLOWS[normalizedModel]?.name || normalizedModel,
+                      modelKey: normalizedModel,
+                      prompt: enhancedPrompt,
+                      timestamp: new Date().toISOString(),
+                      cost: 'FREE (Local)',
+                      size: imageBuffer.byteLength,
+                      promptId,
+                      description: COMFYUI_WORKFLOWS[normalizedModel]?.description || 'AI-generated image',
+                      serverUrl: baseUrl
+                    }
                   }
                 }
               }
@@ -548,15 +577,21 @@ export async function generateWithComfyUI(
         const errorMessage = pollError instanceof Error ? pollError.message : String(pollError)
         console.log(`⚠️ Error polling ComfyUI (attempt ${attempts + 1}):`, errorMessage)
         
-        // Don't immediately fail on connection errors, keep trying
+        // Handle specific connection errors gracefully
         if (pollError instanceof Error) {
           if (pollError.name === 'AbortError' || errorMessage.includes('timeout')) {
-            console.log('🔄 Continuing polling despite timeout...')
-          } else if (errorMessage.includes('connection') || errorMessage.includes('network')) {
-            console.log('🔄 Network issue, continuing polling...')
+            console.log('🔄 Polling timeout, continuing...')
+          } else if (errorMessage.includes('ConnectionResetError') || 
+                     errorMessage.includes('connection') || 
+                     errorMessage.includes('network') ||
+                     errorMessage.includes('ECONNRESET') ||
+                     errorMessage.includes('forcibly closed')) {
+            console.log('🔄 Connection reset detected, continuing polling...')
+            // Add small delay on connection issues
+            await new Promise(resolve => setTimeout(resolve, 1000))
           }
         }
-        // Continue polling for other errors too - ComfyUI might still be working
+        // Continue polling - ComfyUI is likely still processing
       }
       
       attempts++
