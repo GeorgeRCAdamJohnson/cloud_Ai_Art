@@ -14,9 +14,8 @@
   }
 }
 
+/* Remove body styling that might override Tailwind */
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Hybrid approach: support both App Router and Pages Router for API routes
+  // Hybrid approach: App Router for UI, Pages Router for API routes
   
   images: {
     domains: ['localhost', 'cloudaiart.netlify.app'],
@@ -9,7 +9,7 @@ const nextConfig = {
   
   trailingSlash: false,
   
-  // Essential for Netlify deployment
+  // Hybrid routing configuration
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },

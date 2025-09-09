@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { Wand2, Download, Loader2 } from 'lucide-react'
+import ComfyUIModelSelector from './ComfyUIModelSelector'
+import ComfyUISettings from './ComfyUISettings'
+import AdvancedSettings from './AdvancedSettings'
+import { GenerationSettings } from '../lib/resource-manager'
 
 interface SpriteGeneratorProps {
   selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia' | 'comfyui-local'
@@ -32,8 +36,9 @@ const SERVICE_MODELS = {
     'openjourney': { name: 'OpenJourney', description: 'Artistic style' }
   },
   'comfyui-local': {
-    'sdxl': { name: 'SDXL Base', description: 'High quality, detailed (6.5GB)' },
-    'sd15': { name: 'SD 1.5', description: 'Classic, fast (4GB)' }
+    'cartoon-3d': { name: '3D Cartoon Safe', description: 'VRAM safe, 512x512, Pixar style (~6s)' },
+    'sdxl-base': { name: 'SDXL Safe', description: 'VRAM safe, 512x512, realistic (~8s)' },
+    'anime-sprite': { name: 'Anime Safe', description: 'VRAM safe, 512x512, anime style (~7s)' }
   },
   huggingface: {
     'default': { name: 'FLUX.1-schnell', description: 'Fast generation' }
@@ -57,12 +62,25 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   const [selectedModel, setSelectedModel] = useState<string>('')
+  const [comfyUISettings, setComfyUISettings] = useState({
+    width: 768,
+    height: 768,
+    quality: 'optimized' as 'optimized' | 'high' | 'ultra',
+    resolution: 'square-medium'
+  })
+  const [customSettings, setCustomSettings] = useState<Partial<GenerationSettings>>({})
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   // Auto-select first model when service changes
   useEffect(() => {
     const availableModels = Object.keys(SERVICE_MODELS[selectedService] || {})
     if (availableModels.length > 0) {
-      setSelectedModel(availableModels[0])
+      // For ComfyUI Local, prefer sdxl-base as it's the only working model
+      if (selectedService === 'comfyui-local' && availableModels.includes('sdxl-base')) {
+        setSelectedModel('sdxl-base')
+      } else {
+        setSelectedModel(availableModels[0])
+      }
     }
   }, [selectedService])
 
@@ -80,16 +98,28 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
 
     setIsGenerating(true)
     try {
+      const requestBody: any = {
+        prompt: selectedService === 'comfyui-local' ? prompt : prompt + " 2D game sprite, pixel art style, transparent background, kids friendly",
+        service: selectedService,
+        model: selectedModel || Object.keys(SERVICE_MODELS[selectedService] || {})[0]
+      }
+
+      // Add ComfyUI-specific settings
+      if (selectedService === 'comfyui-local') {
+        requestBody.comfyUIOptions = {
+          width: comfyUISettings.width,
+          height: comfyUISettings.height,
+          quality: comfyUISettings.quality,
+          customSettings: Object.keys(customSettings).length > 0 ? customSettings : undefined
+        }
+      }
+
       const response = await fetch('/api/generate-sprite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          prompt: prompt + " 2D game sprite, pixel art style, transparent background, kids friendly",
-          service: selectedService,
-          model: selectedModel || Object.keys(SERVICE_MODELS[selectedService] || {})[0]
-        }),
+        body: JSON.stringify(requestBody),
       })
 
       const data = await response.json()
@@ -137,31 +167,49 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
           />
         </div>
 
-        {/* Model Selection */}
-        <div>
-          <label className="block text-white/80 mb-2">Choose AI Model:</label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {Object.entries(SERVICE_MODELS[selectedService] || {}).map(([modelKey, modelInfo]) => (
-              <button
-                key={modelKey}
-                onClick={() => setSelectedModel(modelKey)}
-                className={`p-3 rounded-lg border transition-all duration-200 text-left ${
-                  selectedModel === modelKey
-                    ? 'bg-white/20 border-white/50 ring-2 ring-white/30'
-                    : 'bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30'
-                }`}
-              >
-                <div className="font-medium text-white">{modelInfo.name}</div>
-                <div className="text-sm text-white/70">{modelInfo.description}</div>
-              </button>
-            ))}
+        {/* ComfyUI Model Selection */}
+        <ComfyUIModelSelector 
+          selectedModel={selectedModel}
+          onModelChange={setSelectedModel}
+          isVisible={selectedService === 'comfyui-local'}
+        />
+
+        {/* ComfyUI Quality & Resolution Settings */}
+        <ComfyUISettings
+          isVisible={selectedService === 'comfyui-local'}
+          onSettingsChange={setComfyUISettings}
+        />
+
+        {/* Advanced Settings for ComfyUI */}
+        {selectedService === 'comfyui-local' && (
+          <AdvancedSettings
+            selectedModel={selectedModel as any}
+            onSettingsChange={setCustomSettings}
+          />
+        )}
+
+        {/* Other Services Model Selection */}
+        {selectedService !== 'comfyui-local' && Object.keys(SERVICE_MODELS[selectedService] || {}).length > 1 && (
+          <div>
+            <label className="block text-white/80 mb-2">Choose AI Model:</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {Object.entries(SERVICE_MODELS[selectedService] || {}).map(([modelKey, modelInfo]) => (
+                <button
+                  key={modelKey}
+                  onClick={() => setSelectedModel(modelKey)}
+                  className={`p-3 rounded-lg border transition-all duration-200 text-left ${
+                    selectedModel === modelKey
+                      ? 'bg-white/20 border-white/50 ring-2 ring-white/30'
+                      : 'bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30'
+                  }`}
+                >
+                  <div className="font-medium text-white">{modelInfo.name}</div>
+                  <div className="text-sm text-white/70">{modelInfo.description}</div>
+                </button>
+              ))}
+            </div>
           </div>
-          {!selectedModel && Object.keys(SERVICE_MODELS[selectedService] || {}).length > 0 && (
-            <p className="text-sm text-yellow-300 mt-2">
-              💡 Select a model above or we&apos;ll use the default one
-            </p>
-          )}
-        </div>
+        )}
 
         <div>
           <p className="text-white/80 mb-3">Quick prompts:</p>
@@ -186,7 +234,11 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
           {isGenerating ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Generating...
+              {selectedService === 'comfyui-local' ? (
+                comfyUISettings.quality === 'ultra' ? 'Generating... (up to 20min)' :
+                comfyUISettings.quality === 'high' ? 'Generating... (~2-5min)' :
+                'Generating... (~30s)'
+              ) : 'Generating...'}
             </>
           ) : (
             <>
@@ -195,6 +247,21 @@ export default function SpriteGenerator({ selectedService, onSpriteGenerated }: 
             </>
           )}
         </button>
+        
+        {isGenerating && selectedService === 'comfyui-local' && (
+          <div className="mt-3 p-3 bg-purple-500/10 rounded-lg border border-purple-400/20">
+            <p className="text-sm text-purple-200 text-center">
+              <strong>🎨 ComfyUI RTX 3050 Optimized!</strong> 
+              {comfyUISettings.quality === 'ultra' && ' 💎 Ultra Quality - Maximum detail and perfection (up to 20min)!'}
+              {comfyUISettings.quality === 'high' && ' 🎨 High Quality - Excellent balance of speed and detail!'}
+              {comfyUISettings.quality === 'optimized' && ' ⚡ Optimized Speed - Fast generation with good quality!'}
+              <br />
+              <span className="text-sm text-purple-300">
+                Resolution: {comfyUISettings.width}×{comfyUISettings.height} • Model: SDXL Base
+              </span>
+            </p>
+          </div>
+        )}
 
         {generatedImage && (
           <div className="bg-white/5 rounded-lg p-4">

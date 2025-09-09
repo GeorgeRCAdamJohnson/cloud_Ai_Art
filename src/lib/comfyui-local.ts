@@ -193,25 +193,229 @@ const DEFAULT_CONFIG: ComfyUIConfig = {
   timeout: parseInt(process.env.COMFYUI_TIMEOUT || '60000')
 }
 
-export async function generateWithComfyUI(prompt: string, model: ComfyUIModel = 'sdxl'): Promise<GenerationResult> {
+// Advanced Prompt Engineering System
+const PROMPT_TEMPLATES = {
+  character: {
+    base: 'detailed character design, full body character, game character sheet',
+    styles: {
+      cartoon: 'cartoon style, cel shading, clean lines, bright colors, stylized proportions',
+      anime: 'anime art style, manga illustration, detailed anime character, vibrant anime colors',
+      fantasy: 'fantasy character design, magical elements, epic fantasy art style',
+      cute: 'kawaii style, adorable character, cute proportions, charming design',
+      heroic: 'heroic character design, dynamic pose, epic character art, legendary hero'
+    }
+  },
+  sprite: {
+    base: '2D game sprite, pixel-perfect design, game asset, clean sprite art',
+    styles: {
+      retro: 'retro game sprite, 16-bit style, classic video game art',
+      modern: 'modern game sprite, high-resolution sprite, contemporary game art',
+      mobile: 'mobile game character, casual game art, friendly design, polished sprite'
+    }
+  }
+}
+
+const QUALITY_ENHANCERS = {
+  optimized: {
+    positive: 'good quality, clean art, well-designed',
+    technical: '(clean lines:1.1), (bright colors:1.0)'
+  },
+  high: {
+    positive: 'high quality, masterpiece, professional art, detailed design, excellent composition',
+    technical: '(masterpiece:1.2), (best quality:1.3), (ultra-detailed:1.1), (sharp focus:1.1)'
+  },
+  ultra: {
+    positive: 'masterpiece, best quality, ultra-detailed, professional artwork, studio quality, award-winning design, perfect composition, exceptional detail',
+    technical: '(masterpiece:1.4), (best quality:1.4), (ultra-detailed:1.3), (perfect composition:1.2), (studio lighting:1.1), (sharp focus:1.2), (professional artwork:1.3)'
+  }
+}
+
+const NEGATIVE_PROMPTS = {
+  general: 'lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry',
+  character: 'deformed, ugly, mutilated, disfigured, bad proportions, malformed limbs, extra limbs, cloned face, missing arms, missing legs, fused fingers, too many fingers',
+  sprite: 'pixelated, aliasing, compression artifacts, muddy colors, unclear edges, low resolution, distorted proportions',
+  kids_safe: 'nsfw, nude, inappropriate, scary, violent, dark themes, horror, blood, weapons'
+}
+
+function buildAdvancedPrompt(
+  userPrompt: string, 
+  model: ComfyUIModel, 
+  quality: 'optimized' | 'high' | 'ultra' = 'optimized'
+): { positive: string; negative: string } {
+  
+  // Analyze user prompt for content type and style hints
+  const isCharacter = /character|person|hero|knight|dragon|fairy|princess|warrior|mage|wizard|robot|creature/i.test(userPrompt)
+  const isSprite = /sprite|game|pixel|2d|asset/i.test(userPrompt)
+  const isCute = /cute|adorable|kawaii|friendly|sweet|charming/i.test(userPrompt)
+  const isFantasy = /magic|fantasy|wizard|dragon|fairy|mythical|enchanted/i.test(userPrompt)
+  const isHeroic = /hero|knight|warrior|brave|epic|legendary|champion/i.test(userPrompt)
+  
+  // Build positive prompt components
+  const components = []
+  
+  // Quality enhancers first
+  const qualityEnhancer = QUALITY_ENHANCERS[quality]
+  components.push(qualityEnhancer.technical)
+  
+  // Core user prompt (cleaned and enhanced) - EMPHASIZED for consistency
+  const cleanPrompt = userPrompt.replace(/[,\s]+$/, '') // Remove trailing commas/spaces
+  components.push(`"${cleanPrompt}"`) // Quote the main subject for emphasis
+  components.push(`main subject: ${cleanPrompt}`) // Reinforce the subject
+  
+  // Add base template
+  if (isCharacter) {
+    components.push(PROMPT_TEMPLATES.character.base)
+    
+    // Add style-specific enhancements
+    if (isCute) components.push(PROMPT_TEMPLATES.character.styles.cute)
+    else if (isFantasy) components.push(PROMPT_TEMPLATES.character.styles.fantasy)
+    else if (isHeroic) components.push(PROMPT_TEMPLATES.character.styles.heroic)
+    else components.push(PROMPT_TEMPLATES.character.styles.cartoon)
+  }
+  
+  if (isSprite) {
+    components.push(PROMPT_TEMPLATES.sprite.base)
+    components.push(PROMPT_TEMPLATES.sprite.styles.modern)
+  }
+  
+  // Model-specific enhancements (reduced to prevent subject drift)
+  switch (model) {
+    case 'sdxl':
+      components.push('detailed illustration, clean digital art')
+      break
+    case 'sd15':
+      components.push('2D game art, cartoon style')
+      break
+  }
+  
+  // Essential specifications only
+  components.push('white background, clean composition')
+  components.push('game asset, high quality')
+  components.push(qualityEnhancer.positive)
+  
+  // Kids-friendly elements (always include)
+  components.push('colorful, bright lighting, cheerful, family-friendly, appropriate for children')
+  
+  // Build negative prompt with stronger subject preservation
+  const negativeComponents = [
+    NEGATIVE_PROMPTS.general,
+    NEGATIVE_PROMPTS.kids_safe,
+    'cars, vehicles, automobiles, trucks, motorcycles, trains, planes, ships, boats', // Prevent common drift subjects
+    'buildings, architecture, landscapes, scenery, city, urban, roads, streets', // Prevent environment drift
+    'multiple subjects, crowd, group, many characters' // Keep focus on single subject
+  ]
+  
+  if (isCharacter) {
+    negativeComponents.push(NEGATIVE_PROMPTS.character)
+  }
+  
+  if (isSprite) {
+    negativeComponents.push(NEGATIVE_PROMPTS.sprite)
+  }
+  
+  // Add model-specific negative prompts
+  switch (model) {
+    case 'sdxl':
+      negativeComponents.push('anime, manga style, low quality render, pixelated')
+      break
+    case 'sd15':
+      negativeComponents.push('photographic, realistic photo, 3d render')
+      break
+  }
+  
+  return {
+    positive: components.join(', '),
+    negative: negativeComponents.join(', ')
+  }
+}
+
+interface ComfyUIGenerationOptions {
+  width?: number
+  height?: number
+  quality?: 'optimized' | 'high' | 'ultra'
+  customSettings?: any
+  consistentSeed?: boolean // New option for consistent results
+}
+
+export async function generateWithComfyUI(
+  prompt: string, 
+  model: ComfyUIModel = 'sdxl',
+  options: ComfyUIGenerationOptions = {}
+): Promise<GenerationResult> {
+  // Handle model name mapping for backward compatibility
+  const normalizedModel: ComfyUIModel = (model === 'sdxl-base' as any) ? 'sdxl' : model
+  
   try {
     const config = DEFAULT_CONFIG
     const baseUrl = `${config.serverUrl}:${config.port}`
     
-    console.log(`🎨 Generating with ComfyUI ${COMFYUI_WORKFLOWS[model].name}:`, prompt)
+    const quality = options.quality || 'optimized'
+    console.log(`🎨 Generating with ComfyUI ${COMFYUI_WORKFLOWS[normalizedModel].name} (${quality}):`, prompt)
     console.log(`🔗 ComfyUI Server: ${baseUrl}`)
+    console.log(`📐 Resolution: ${options.width || 768}x${options.height || 768}`)
 
-    // Enhance prompt for 2D game sprites
-    const enhancedPrompt = `${prompt}, 2D game sprite, pixel art style, cartoon style, colorful, cute character, kids friendly, simple background, clean art style, high quality`
+    // Generate advanced prompts using the new system
+    const promptData = buildAdvancedPrompt(prompt, normalizedModel, quality)
+    
+    console.log(`🎯 Enhanced Prompt: ${promptData.positive.substring(0, 100)}...`)
+    console.log(`🚫 Negative Prompt: ${promptData.negative.substring(0, 80)}...`)
+
+    // Enhance prompt for 2D game sprites (legacy fallback)
+    const enhancedPrompt = promptData.positive
     
     // Prepare workflow
-    const workflow = JSON.parse(JSON.stringify(COMFYUI_WORKFLOWS[model].workflow))
+    if (!COMFYUI_WORKFLOWS[normalizedModel]) {
+      throw new Error(`Unsupported model: ${model}. Available models: ${Object.keys(COMFYUI_WORKFLOWS).join(', ')}`)
+    }
+    const workflow = JSON.parse(JSON.stringify(COMFYUI_WORKFLOWS[normalizedModel].workflow))
     
-    // Set the prompt in the workflow
-    workflow["6"].inputs.text = enhancedPrompt
+    // Set the positive and negative prompts in the workflow
+    workflow["6"].inputs.text = promptData.positive
+    workflow["7"].inputs.text = promptData.negative
     
-    // Set random seed
-    workflow["3"].inputs.seed = Math.floor(Math.random() * 1000000)
+    // Set seed (consistent or random)
+    if (options.consistentSeed) {
+      // Use a hash of the prompt for consistent results
+      const promptHash = prompt.split('').reduce((a, b) => {
+        a = ((a << 5) - a) + b.charCodeAt(0)
+        return a & a
+      }, 0)
+      workflow["3"].inputs.seed = Math.abs(promptHash) % 1000000
+    } else {
+      workflow["3"].inputs.seed = Math.floor(Math.random() * 1000000)
+    }
+
+    // Apply custom settings from options
+    if (options.width && workflow["5"]?.inputs) {
+      workflow["5"].inputs.width = options.width
+    }
+    if (options.height && workflow["5"]?.inputs) {
+      workflow["5"].inputs.height = options.height
+    }
+
+    // Apply advanced custom settings if provided
+    if (options.customSettings) {
+      const { width, height, steps, cfg, sampler, scheduler } = options.customSettings
+      console.log(`🔧 Applying advanced settings:`, {
+        width, height, steps, cfg, sampler, scheduler
+      })
+      
+      // Apply custom dimensions
+      if (width && workflow["5"]?.inputs) {
+        workflow["5"].inputs.width = width
+      }
+      if (height && workflow["5"]?.inputs) {
+        workflow["5"].inputs.height = height
+      }
+      
+      // Apply KSampler settings (node 3 for most workflows)
+      if (workflow["3"]?.inputs) {
+        if (steps) workflow["3"].inputs.steps = steps
+        if (cfg) workflow["3"].inputs.cfg = cfg
+        if (sampler) workflow["3"].inputs.sampler_name = sampler
+        if (scheduler) workflow["3"].inputs.scheduler = scheduler
+      }
+    }
 
     // Step 1: Check if ComfyUI server is running
     try {
@@ -290,38 +494,50 @@ export async function generateWithComfyUI(prompt: string, model: ComfyUIModel = 
             if (historyResponse.ok) {
               const history = await historyResponse.json()
               
-              if (history[promptId] && history[promptId].outputs) {
+              if (history[promptId]?.outputs) {
                 // Find the SaveImage node output
                 const outputs = history[promptId].outputs
                 const saveImageOutput = outputs["9"] // Node 9 is SaveImage in our workflow
                 
-                if (saveImageOutput && saveImageOutput.images && saveImageOutput.images.length > 0) {
+                if (saveImageOutput?.images?.length > 0) {
                   const imageInfo = saveImageOutput.images[0]
                   const imageUrl = `${baseUrl}/view?filename=${imageInfo.filename}&subfolder=${imageInfo.subfolder || ''}&type=${imageInfo.type || 'output'}`
                   
-                  // Fetch the actual image and convert to base64
-                  const imageResponse = await fetch(imageUrl)
-                  const imageBuffer = await imageResponse.arrayBuffer()
-                  const base64Data = Buffer.from(imageBuffer).toString('base64')
-                  const dataUrl = `data:image/png;base64,${base64Data}`
-
-                  console.log('✅ Successfully generated image with ComfyUI')
-                  console.log(`📁 Image size: ${imageBuffer.byteLength} bytes`)
-
-                  return {
-                    imageUrl: dataUrl,
-                    metadata: {
-                      service: 'comfyui-local',
-                      model: COMFYUI_WORKFLOWS[model].name,
-                      modelKey: model,
-                      prompt: enhancedPrompt,
-                      timestamp: new Date().toISOString(),
-                      cost: 'FREE (Local)',
-                      size: imageBuffer.byteLength,
-                      promptId,
-                      description: COMFYUI_WORKFLOWS[model].description,
-                      serverUrl: baseUrl
+                  // Fetch the actual image and convert to base64 with better error handling
+                  try {
+                    const imageResponse = await fetch(imageUrl, {
+                      signal: AbortSignal.timeout(10000) // 10 second timeout for image fetch
+                    })
+                    
+                    if (!imageResponse.ok) {
+                      throw new Error(`Failed to fetch image: ${imageResponse.status}`)
                     }
+                    
+                    const imageBuffer = await imageResponse.arrayBuffer()
+                    const base64Data = Buffer.from(imageBuffer).toString('base64')
+                    const dataUrl = `data:image/png;base64,${base64Data}`
+
+                    console.log('✅ Successfully generated image with ComfyUI')
+                    console.log(`📁 Image size: ${imageBuffer.byteLength} bytes`)
+
+                    return {
+                      imageUrl: dataUrl,
+                      metadata: {
+                        service: 'comfyui-local',
+                        model: COMFYUI_WORKFLOWS[normalizedModel]?.name || normalizedModel,
+                        modelKey: normalizedModel,
+                        prompt: enhancedPrompt,
+                        timestamp: new Date().toISOString(),
+                        cost: 'FREE (Local)',
+                        size: imageBuffer.byteLength,
+                        promptId,
+                        description: COMFYUI_WORKFLOWS[normalizedModel]?.description || 'AI-generated image',
+                        serverUrl: baseUrl
+                      }
+                    }
+                  } catch (imageError) {
+                    console.log('⚠️ Error fetching generated image:', imageError)
+                    return createComfyUIFallback(prompt, model, 'Generated but failed to fetch image')
                   }
                 }
               }
@@ -329,7 +545,18 @@ export async function generateWithComfyUI(prompt: string, model: ComfyUIModel = 
           }
         }
       } catch (pollError) {
-        console.log('⚠️ Error polling ComfyUI:', pollError)
+        const errorMessage = pollError instanceof Error ? pollError.message : String(pollError)
+        console.log(`⚠️ Error polling ComfyUI (attempt ${attempts + 1}):`, errorMessage)
+        
+        // Don't immediately fail on connection errors, keep trying
+        if (pollError instanceof Error) {
+          if (pollError.name === 'AbortError' || errorMessage.includes('timeout')) {
+            console.log('🔄 Continuing polling despite timeout...')
+          } else if (errorMessage.includes('connection') || errorMessage.includes('network')) {
+            console.log('🔄 Network issue, continuing polling...')
+          }
+        }
+        // Continue polling for other errors too - ComfyUI might still be working
       }
       
       attempts++
@@ -338,11 +565,11 @@ export async function generateWithComfyUI(prompt: string, model: ComfyUIModel = 
 
     // If we get here, it timed out
     console.log('⏰ ComfyUI generation timed out')
-    return createComfyUIFallback(prompt, model, 'Generation timed out')
+    return createComfyUIFallback(prompt, normalizedModel, 'Generation timed out')
 
   } catch (error) {
     console.error('❌ ComfyUI error:', error)
-    return createComfyUIFallback(prompt, model, `Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    return createComfyUIFallback(prompt, normalizedModel, `Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
 
@@ -353,7 +580,9 @@ function createComfyUIFallback(prompt: string, model: ComfyUIModel, reason: stri
   const width = 512
   const height = 512
   
-  const modelInfo = COMFYUI_WORKFLOWS[model]
+  // Handle model name mapping for fallback
+  const normalizedModel: ComfyUIModel = (model === 'sdxl-base' as any) ? 'sdxl' : model
+  const modelInfo = COMFYUI_WORKFLOWS[normalizedModel] || { name: `Unknown Model (${model})` }
   
   // Create an informative SVG placeholder
   const svgContent = `

@@ -2,7 +2,53 @@
 
 A lightweight AI-powered platform for generating 2D game sprites specifically designed for kids' games. This application provides an easy-to-use web interface that integrates with **FREE and paid** cloud AI services without the complexity of local model setup.
 
-## 🆓 **FREE AI Options Available!**
+## 🆓 **FREE AI Opti## 📖 API Documentation
+
+### Generate Sprite Endpoint
+```
+POST /api/generate-sprite
+{
+  "prompt": "cute dragon character",
+  "service": "aws" | "azure" | "google" | "huggingface" | "replicate" | "comfyui-local",
+  "model": "sdxl-base" | "anime-sprite" | "cartoon-3d",
+  "comfyUIOptions": {
+    "width": 768,
+    "height": 768,
+    "quality": "optimized" | "high" | "ultra"
+  }
+}
+```
+
+### ComfyUI Local Options
+```json
+{
+  "service": "comfyui-local",
+  "model": "sdxl-base",
+  "comfyUIOptions": {
+    "width": 1024,
+    "height": 1024,
+    "quality": "ultra"
+  }
+}
+```
+
+### Response Format
+```json
+{
+  "success": true,
+  "imageUrl": "data:image/png;base64,<base64_data>",
+  "metadata": {
+    "service": "comfyui-local",
+    "model": "sdxl-base",
+    "prompt": "cute dragon character",
+    "resolution": "1024x1024",
+    "quality": "ultra",
+    "vramUsage": "5.8GB",
+    "generationTime": "12.5min",
+    "timestamp": "2025-09-08T00:00:00.000Z"
+  }
+}
+```
 
 ### **Hugging Face** (Completely FREE)
 - ✅ **1000 images per month** at no cost
@@ -17,13 +63,18 @@ A lightweight AI-powered platform for generating 2D game sprites specifically de
 
 ## 🚀 Features
 
-- **Multi-Cloud AI Integration**: Support for FREE (Hugging Face, Replicate) and paid services (AWS, Azure, Google)
-- **Kid-Friendly Design**: Colorful, intuitive interface perfect for creating children's game assets
-- **2D Sprite Focused**: Optimized prompts and settings for game sprite generation
-- **Real-time Generation**: Fast sprite creation with live preview
-- **Download & Gallery**: Save and organize your generated sprites
-- **No Local Setup Required**: All AI processing happens in the cloud
-- **🆓 FREE OPTIONS**: Start generating immediately with free services
+- **🎨 ComfyUI Local Integration**: RTX 3050 6GB optimized with professional SDXL model and hardware-aware throttling
+- **⚡ Ultimate Performance**: 25-45s optimized generation, 2-5min high quality, up to 20min ultra quality
+- **🧠 Smart Memory Management**: Automatic VRAM usage calculation and safe parameter selection
+- **📐 Flexible Resolution Control**: 8 preset sizes plus custom resolution with memory impact warnings
+- **🎯 Quality System**: 3-tier system (Optimized/High/Ultra) with RTX 3050-specific parameter tuning
+- **💾 Hardware Optimized**: Perfect for RTX 3050 6GB - prevents VRAM overflow with intelligent throttling
+- **☁️ Multi-Cloud AI Integration**: Support for FREE (Hugging Face, Replicate) and paid services (AWS, Azure, Google)
+- **👶 Kid-Friendly Design**: Colorful, intuitive interface perfect for creating children's game assets
+- **🎮 2D Sprite Focused**: Optimized prompts and settings for game sprite generation
+- **⚡ Real-time Generation**: Fast sprite creation with live preview and VRAM monitoring
+- **💾 Download & Gallery**: Save and organize your generated sprites with metadata
+- **🆓 FREE OPTIONS**: Start generating immediately with free services or unlimited local generation
 
 ## 🎯 Target Use Cases
 
@@ -34,7 +85,26 @@ A lightweight AI-powered platform for generating 2D game sprites specifically de
 
 ## ☁️ **AI Service Options**
 
-### 🆓 **FREE Services (Recommended to Start)**
+### 🚀 **ULTIMATE: ComfyUI Local (RTX 3050 Optimized)**
+
+### 🚀 **ULTIMATE: ComfyUI Local (RTX 3050 Optimized)**
+
+#### **ComfyUI Local** (UNLIMITED FREE)
+- **Cost**: FREE - Unlimited generation with no API costs
+- **Model**: SDXL Base 1.0 (Professional quality, versatile)
+- **Speed**: 25-45s (Optimized) | 2-5min (High) | up to 20min (Ultra)
+- **Quality**: Professional game-ready assets with studio-grade detail
+- **Hardware**: RTX 3050 6GB optimized with intelligent memory management
+- **Features**: 
+  - 🧠 **Smart VRAM Management**: Automatic parameter adjustment based on resolution
+  - 📐 **8 Resolution Presets**: From 512×512 to 1280×720 plus custom sizes
+  - ⚡ **3-Tier Quality System**: Optimized/High/Ultra with hardware-aware settings
+  - 🎯 **Memory-Safe Generation**: Prevents VRAM overflow with usage estimation
+  - ⏱️ **Extended Timeout**: Up to 20 minutes for ultra-high quality generation
+  - 🔄 **Real-time Monitoring**: Live VRAM usage and generation progress
+- **Setup**: Download SDXL model, run ComfyUI locally, configure workspace
+
+### 🆓 **FREE Services (Cloud-based)**
 
 #### **Hugging Face** (Completely FREE)
 - **Cost**: FREE - 1000 images per month
@@ -72,7 +142,9 @@ A lightweight AI-powered platform for generating 2D game sprites specifically de
 
 ### Prerequisites
 - Node.js 18+ installed
-- Cloud service account (AWS/Azure/Google)
+- **For ComfyUI Local**: RTX 3050/3060/4060 or better (6GB+ VRAM required)
+- **For ComfyUI Setup**: Python 3.8+ and Git
+- **For Cloud Services**: Cloud service account (AWS/Azure/Google)
 - Basic knowledge of environment variables
 
 ### 1. Clone & Install
@@ -82,7 +154,41 @@ cd cloud-ai-art
 npm install
 ```
 
-### 2. Environment Setup
+### 2. ComfyUI Local Setup (Recommended for Unlimited FREE Generation)
+
+#### Download ComfyUI:
+```bash
+# Clone ComfyUI
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+
+# Install dependencies
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt
+```
+
+#### Download SDXL Model:
+```bash
+# Download the SDXL Base model (6.9GB)
+cd models/checkpoints
+# Download from: https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+# Place as: sd_xl_base_1.0.safetensors
+```
+
+#### Start ComfyUI Server:
+```bash
+cd ComfyUI
+python main.py --listen --port 8188
+```
+
+#### RTX 3050 Optimization Features:
+- **Automatic VRAM Management**: Prevents out-of-memory errors
+- **Dynamic Parameter Scaling**: Adjusts steps/CFG based on resolution
+- **Memory Usage Estimation**: Real-time VRAM usage calculation
+- **Safe Settings Calculation**: Hardware-aware parameter selection
+- **Extended Timeout Support**: Up to 20 minutes for ultra quality
+
+### 3. Environment Setup
 Copy `.env.example` to `.env.local` and configure your cloud credentials:
 
 #### For AWS Bedrock:
@@ -196,6 +302,37 @@ npm install
 - Check network connectivity
 - Verify API quotas and billing setup
 - Check browser console for detailed errors
+
+### ComfyUI Local Issues:
+
+**"ComfyUI server not running" error**:
+```bash
+# Start ComfyUI server
+cd ComfyUI
+python main.py --listen --port 8188
+```
+
+**VRAM out of memory errors**:
+- Use lower quality settings (Optimized instead of Ultra)
+- Reduce resolution (try 768×768 instead of 1024×1024)
+- Check VRAM usage in the UI before generation
+
+**Model file corrupted**:
+```bash
+# Re-download SDXL model
+cd ComfyUI/models/checkpoints
+# Download fresh copy of sd_xl_base_1.0.safetensors
+```
+
+**Slow generation times**:
+- Ensure you're using RTX 3050-optimized settings
+- Check GPU utilization in Task Manager
+- Use Optimized quality for faster results (25-45s)
+
+**Timeout errors**:
+- Ultra quality can take up to 20 minutes
+- Check ComfyUI server logs for actual progress
+- Ensure stable power supply for long generations
 
 ## � Deployment
 

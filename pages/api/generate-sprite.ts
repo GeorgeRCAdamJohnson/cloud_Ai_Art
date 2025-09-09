@@ -39,9 +39,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { prompt, service = 'pollinations', model } = req.body
+    const { prompt, service = 'comfyui-local', model, comfyUIOptions } = req.body
 
     console.log(`Generating sprite with ${service}:`, prompt, 'Model:', model)
+    
+    if (comfyUIOptions) {
+      console.log('ComfyUI Options:', comfyUIOptions)
+    }
 
     if (!prompt || !service) {
       return res.status(400).json({
@@ -85,7 +89,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         result = await generateWithProdia(prompt, model || 'dreamlike-anime')
         break
       case 'comfyui-local':
-        result = await generateWithComfyUI(prompt, model || 'sdxl')
+        const options = comfyUIOptions || {}
+        // Pass custom settings and consistency option if provided
+        if (options.customSettings) {
+          options.customSettings = options.customSettings
+          // Extract consistency setting if present
+          if (options.customSettings.consistentSeed !== undefined) {
+            options.consistentSeed = options.customSettings.consistentSeed
+          }
+        }
+        result = await generateWithComfyUI(
+          prompt, 
+          model || 'sdxl',
+          options
+        )
         break
       default:
         return res.status(400).json({

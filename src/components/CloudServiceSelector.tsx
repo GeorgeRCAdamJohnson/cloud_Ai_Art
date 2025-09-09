@@ -13,10 +13,10 @@ export default function CloudServiceSelector({ selectedService, onServiceChange 
       id: 'comfyui-local' as const,
       name: 'ComfyUI Local',
       icon: Zap,
-      description: 'ULTIMATE FREE - Self-hosted unlimited generation',
+      description: 'ULTIMATE FREE - Self-hosted with FLUX, SDXL Turbo, Anime & Pixel Art models',
       color: 'bg-gradient-to-r from-purple-600 to-blue-600',
-      features: ['Unlimited generation', 'Any SD model', 'Complete control', 'Offline capable'],
-      badge: '🚀 UNLIMITED',
+      features: ['FLUX.1 Dev (Ultra Quality)', 'SDXL Turbo (Fast)', 'Anime Sprites', 'Pixel Art', 'Unlimited generation'],
+      badge: '🚀 PREMIUM MODELS',
       status: 'ultimate'
     },
     {
@@ -105,6 +105,52 @@ export default function CloudServiceSelector({ selectedService, onServiceChange 
     <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6">
       <h2 className="text-2xl font-bold text-white mb-6">Choose AI Service</h2>
       
+      {/* ComfyUI Local - Ultimate Section */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold text-purple-300 mb-3">🚀 ULTIMATE - Unlimited Local Generation</h3>
+        <div className="space-y-4">
+          {services.filter(service => service.status === 'ultimate').map((service) => {
+            const Icon = service.icon
+            return (
+              <button
+                key={service.id}
+                onClick={() => onServiceChange(service.id)}
+                className={`w-full p-4 rounded-xl transition-all duration-200 ring-2 ring-purple-400/50 ${
+                  selectedService === service.id
+                    ? 'bg-white/20 ring-purple-300 shadow-lg'
+                    : 'bg-gradient-to-r from-purple-900/30 to-blue-900/30 hover:bg-white/10'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`p-2 rounded-lg ${service.color}`}>
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-white">{service.name}</h3>
+                      <span className="px-2 py-1 text-xs rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold">
+                        {service.badge}
+                      </span>
+                    </div>
+                    <p className="text-sm text-white/70 mb-2">{service.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {service.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="px-2 py-1 text-xs bg-purple-500/20 text-purple-200 rounded-full"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       {/* Working Services Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-green-300 mb-3">✅ Recommended (Working)</h3>

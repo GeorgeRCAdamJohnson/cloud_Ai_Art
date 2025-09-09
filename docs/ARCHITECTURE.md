@@ -14,9 +14,9 @@ Cloud AI Art Studio follows a modern three-tier architecture with a React/Next.j
 │  │ SpriteGenerator │ │ ServiceSelector │ │ ImageManager    │   │
 │  └─────────────────┘ └─────────────────┘ └─────────────────┘   │
 │                                                                 │
-│  ┌─────────────────┐ ┌─────────────────┐                       │
-│  │ SpriteGallery   │ │ SavedImages     │                       │
-│  └─────────────────┘ └─────────────────┘                       │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │
+│  │ SpriteGallery   │ │ SavedImages     │ │ ComfyUISettings │ │
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘ │
 ├─────────────────────────────────────────────────────────────────┤
 │                         API Layer                              │
 ├─────────────────────────────────────────────────────────────────┤
@@ -29,14 +29,19 @@ Cloud AI Art Studio follows a modern three-tier architecture with a React/Next.j
 ├─────────────────────────────────────────────────────────────────┤
 │  AI Service Integrations                                       │
 │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌───────────┐ │
-│  │ Hugging Face│ │ Replicate   │ │ AWS Bedrock │ │ Azure AI  │ │
-│  │ (Working)   │ │ (Ready)     │ │ (Mock)      │ │ (Mock)    │ │
+│  │ ComfyUI Local│ │ Hugging Face│ │ Replicate   │ │ AWS Bedrock│ │
+│  │ (✅ Active)  │ │ (✅ Working)  │ │ (🔧 Ready)   │ │ (🔧 Mock)   │ │
 │  └─────────────┘ └─────────────┘ └─────────────┘ └───────────┘ │
 │                                                                 │
 │  ┌─────────────┐ ┌─────────────┐                               │
-│  │ Google AI   │ │ ImageStorage│                               │
-│  │ (Mock)      │ │ (Local FS)  │                               │
+│  │ Azure AI    │ │ Google AI   │                               │
+│  │ (🔧 Mock)    │ │ (🔧 Mock)    │                               │
 │  └─────────────┘ └─────────────┘                               │
+│                                                                 │
+│  Hardware Layer (RTX 3050 Optimization)                        │
+│  ┌───────────────────────────────────────────────────────────────┐ │
+│  │ VRAM Management | Memory Throttling | Safe Parameter Selection │ │
+│  └───────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -85,7 +90,35 @@ Cloud AI Art Studio follows a modern three-tier architecture with a React/Next.j
   - Loading states and error handling
   - Automatic prompt enhancement
 
-#### 4. SpriteGallery (`src/components/SpriteGallery.tsx`)
+#### 4. ComfyUIModelSelector (`src/components/ComfyUIModelSelector.tsx`)
+- **Purpose**: Model selection interface for ComfyUI Local
+- **Responsibilities**:
+  - Display available ComfyUI models with status indicators
+  - Show model capabilities and RTX 3050 optimization info
+  - Handle model selection for local generation
+- **Props**:
+  ```typescript
+  interface ComfyUIModelSelectorProps {
+    selectedModel: string
+    onModelChange: (model: string) => void
+    isVisible: boolean
+  }
+  ```
+
+#### 5. ComfyUISettings (`src/components/ComfyUISettings.tsx`)
+- **Purpose**: Advanced settings for ComfyUI Local generation
+- **Responsibilities**:
+  - Resolution selection with 8 presets plus custom
+  - Quality level selection (Optimized/High/Ultra)
+  - VRAM usage estimation and warnings
+  - Hardware-aware parameter recommendations
+- **Key Features**:
+  - Real-time VRAM usage calculation
+  - Memory-safe resolution recommendations
+  - Quality preset descriptions with time estimates
+  - RTX 3050-specific optimization hints
+
+#### 6. SpriteGenerator (`src/components/SpriteGenerator.tsx`) - Enhanced
 - **Purpose**: Display current session's generated sprites
 - **Responsibilities**:
   - Grid layout of generated images
@@ -139,6 +172,29 @@ export interface GenerationResult {
 export async function generateWithService(prompt: string): Promise<GenerationResult>
 ```
 
+**ComfyUI Local (`src/lib/comfyui-local.ts`)**:
+- **Status**: ✅ Fully Active with RTX 3050 Optimization
+- **Model**: SDXL Base 1.0 (6.9GB, Professional Quality)
+- **Cost**: Completely Free (No API costs)
+- **Features**: 
+  - RTX 3050 6GB memory optimization
+  - 3-tier quality system with hardware-aware parameters
+  - 8 resolution presets plus custom sizing
+  - Extended 20-minute timeout for ultra quality
+  - Real-time VRAM usage monitoring
+  - Automatic parameter throttling to prevent overflow
+  - Dynamic workflow generation based on settings
+- **Architecture**:
+  ```typescript
+  interface RTX_3050_CONFIG {
+    maxVRAM: 6144 // MB
+    safeVRAM: 5120 // MB with buffer
+    maxBatchSize: 1
+    getSafeSettings: (width, height, quality) => SafeSettings
+    getVRAMUsage: (width, height, steps) => number
+  }
+  ```
+
 **Hugging Face (`src/lib/huggingface.ts`)**:
 - **Status**: ✅ Working
 - **Model**: FLUX.1-schnell
@@ -178,18 +234,31 @@ export async function generateWithService(prompt: string): Promise<GenerationRes
 
 ### 1. Sprite Generation Flow
 ```
-User Input → Prompt Enhancement → Service Selection → API Call → Image Processing → Storage → UI Update
+User Input → Service Selection → ComfyUI Settings → VRAM Check → Parameter Optimization → Workflow Generation → Local Processing → Storage → UI Update
 ```
 
-1. **User Input**: User enters prompt and selects AI service
-2. **Prompt Enhancement**: System adds kid-friendly terms automatically
-3. **Service Selection**: Router directs to appropriate AI service
-4. **API Call**: HTTP request to external AI service
-5. **Image Processing**: Convert response to base64 format
-6. **Storage**: Automatically save to local filesystem
-7. **UI Update**: Display result and update gallery
+1. **User Input**: User enters prompt and selects ComfyUI Local service
+2. **Service Selection**: Router directs to ComfyUI Local integration
+3. **ComfyUI Settings**: User configures resolution and quality level
+4. **VRAM Check**: System estimates memory usage and validates safety
+5. **Parameter Optimization**: RTX 3050 config calculates safe parameters
+6. **Workflow Generation**: Dynamic JSON workflow created with optimized settings
+7. **Local Processing**: ComfyUI server processes with hardware throttling
+8. **Storage**: Automatically save to local filesystem with metadata
+9. **UI Update**: Display result with generation stats and VRAM usage
 
-### 2. Image Management Flow
+### 2. ComfyUI Hardware Optimization Flow
+```
+Resolution + Quality Input → VRAM Estimation → Parameter Calculation → Safety Validation → Workflow Adjustment
+```
+
+1. **Resolution + Quality Input**: User selects dimensions and quality tier
+2. **VRAM Estimation**: Calculate expected memory usage based on resolution
+3. **Parameter Calculation**: Determine safe steps, CFG, and sampler settings
+4. **Safety Validation**: Ensure total usage stays under 5.1GB threshold
+5. **Workflow Adjustment**: Modify ComfyUI JSON with optimized parameters
+
+### 3. Extended Timeout Flow
 ```
 Storage Request → File System Access → Metadata Processing → Response Formatting
 ```
@@ -265,6 +334,97 @@ CREATE TABLE generated_images (
 - Image watermarking
 - Content moderation
 
+## RTX 3050 Optimization Architecture
+
+### Hardware Configuration
+```typescript
+const RTX_3050_CONFIG = {
+  maxVRAM: 6144,     // Total 6GB VRAM
+  safeVRAM: 5120,    // Safe limit with 1GB buffer
+  maxBatchSize: 1,   // Single image generation
+  
+  // Dynamic VRAM estimation
+  getVRAMUsage: (width, height, steps) => {
+    const pixelCount = width * height
+    const baseVRAM = pixelCount < 512*512 ? 2800 :
+                     pixelCount < 768*768 ? 3500 :
+                     pixelCount < 1024*1024 ? 4800 : 6000
+    return baseVRAM + (steps * 45) // Additional per step
+  },
+  
+  // Safe parameter calculation
+  getSafeSettings: (width, height, quality) => {
+    const estimatedVRAM = getVRAMUsage(width, height, baseSteps)
+    
+    if (estimatedVRAM > safeVRAM) {
+      // Reduce parameters to fit in memory
+      return reduceParameters(quality, estimatedVRAM)
+    }
+    
+    return getOptimalParameters(quality)
+  }
+}
+```
+
+### Quality System Architecture
+```typescript
+const QUALITY_PRESETS = {
+  optimized: {
+    description: 'Fast generation (~25-45s)',
+    targetSteps: 20,
+    targetCFG: 6.0,
+    memoryEfficient: true
+  },
+  high: {
+    description: 'High Quality (~2-5min)',
+    targetSteps: 28,
+    targetCFG: 7.0, 
+    memoryEfficient: true
+  },
+  ultra: {
+    description: 'Ultra Quality (up to 20min)',
+    targetSteps: 35,
+    targetCFG: 7.5,
+    memoryEfficient: false,
+    maxTimeout: 1200000 // 20 minutes
+  }
+}
+```
+
+### Memory Management Flow
+```
+User Settings → VRAM Estimation → Parameter Adjustment → Workflow Generation → Safe Execution
+```
+
+1. **User Settings**: Resolution and quality selection
+2. **VRAM Estimation**: Calculate expected memory usage
+3. **Parameter Adjustment**: Reduce steps/CFG if needed for safety
+4. **Workflow Generation**: Create optimized ComfyUI JSON
+5. **Safe Execution**: Monitor and throttle during generation
+
+## Timeout Architecture
+
+### Multi-Platform Timeout Configuration
+```typescript
+// Core ComfyUI timeout (local development)
+const DEFAULT_CONFIG = {
+  timeout: parseInt(process.env.COMFYUI_TIMEOUT || '1200000') // 20 minutes
+}
+
+// Deployment platform limits
+const PLATFORM_LIMITS = {
+  local: 1200000,      // 20 minutes
+  netlify: 900000,     // 15 minutes (platform max)
+  vercel: 900000       // 15 minutes (Pro plan max)
+}
+```
+
+### Extended Processing Support
+- **Local Development**: Full 20-minute timeout for ultra quality
+- **Serverless Deployment**: 15-minute limit with graceful degradation
+- **Progress Monitoring**: Real-time generation status updates
+- **Automatic Fallback**: Timeout handling with partial results
+
 ## Performance Considerations
 
 ### Frontend Optimization
@@ -288,10 +448,33 @@ CREATE TABLE generated_images (
 ## Scalability Architecture
 
 ### Current Limitations
-- Single server deployment
+- Single ComfyUI server instance
+- RTX 3050 hardware dependency for local generation
+- 20-minute maximum generation time
 - Local file storage
-- No horizontal scaling
-- Limited concurrent users
+- Limited concurrent ComfyUI users (1 generation at a time)
+
+### Scaling Strategies
+
+**ComfyUI Horizontal Scaling**:
+- Multiple GPU instances with load balancing
+- Queue management for concurrent requests
+- Distributed ComfyUI worker nodes
+- Cloud GPU instances (RunPod, Lambda Labs)
+
+**Hybrid Cloud-Local Architecture**:
+```
+┌───────────────┐ ┌───────────────┐ ┌───────────────┐
+│ ComfyUI Local  │ │ Cloud Services │ │ Queue Manager  │
+│ (RTX 3050)    │ │ (AWS/Azure)   │ │ (Load Balance) │
+└───────────────┘ └───────────────┘ └───────────────┘
+```
+
+**Hardware Optimization Scaling**:
+- RTX 4060/4070 upgrade path
+- Multi-GPU ComfyUI setups
+- Dedicated VRAM monitoring
+- Hardware-specific optimization profiles
 
 ### Scaling Strategies
 
@@ -343,10 +526,39 @@ CREATE TABLE generated_images (
 ## Monitoring and Observability
 
 ### Current Monitoring
-- Console logging
+- Console logging with ComfyUI-specific details
 - Error boundary catching
 - Storage statistics
 - Network request monitoring
+- **ComfyUI Health Monitoring**: Server status checks
+- **VRAM Usage Tracking**: Real-time memory monitoring
+- **Generation Progress**: Step-by-step workflow status
+- **Hardware Performance**: GPU utilization and thermal monitoring
+
+### ComfyUI-Specific Monitoring
+```typescript
+// Health check endpoint
+GET /api/comfyui/health
+{
+  "status": "running",
+  "server": "http://localhost:8188",
+  "vramUsage": "2.1GB / 6GB",
+  "queueLength": 0,
+  "activeGeneration": null
+}
+
+// Generation progress
+GET /api/comfyui/progress/{promptId}
+{
+  "promptId": "abc123",
+  "status": "generating",
+  "progress": 0.65,
+  "currentStep": 23,
+  "totalSteps": 35,
+  "elapsedTime": "4m 32s",
+  "estimatedRemaining": "2m 18s"
+}
+```
 
 ### Future Monitoring
 - Application Performance Monitoring (APM)
