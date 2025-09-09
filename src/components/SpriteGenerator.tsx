@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Wand2, Download, Loader2 } from 'lucide-react'
 
 interface SpriteGeneratorProps {
-  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia'
+  selectedService: 'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia' | 'comfyui-local'
   onSpriteGenerated: (sprite: any) => void
 }
 
@@ -30,6 +30,10 @@ const SERVICE_MODELS = {
     'deliberate': { name: 'Deliberate', description: 'High quality' },
     'v1-5-pruned-emaonly': { name: 'SD 1.5', description: 'Fast, reliable' },
     'openjourney': { name: 'OpenJourney', description: 'Artistic style' }
+  },
+  'comfyui-local': {
+    'sdxl': { name: 'SDXL Base', description: 'High quality, detailed (6.5GB)' },
+    'sd15': { name: 'SD 1.5', description: 'Classic, fast (4GB)' }
   },
   huggingface: {
     'default': { name: 'FLUX.1-schnell', description: 'Fast generation' }

@@ -7,7 +7,7 @@ import SpriteGallery from '@/components/SpriteGallery'
 import SavedImagesManager from '@/components/SavedImagesManager'
 
 export default function Home() {
-  const [selectedService, setSelectedService] = useState<'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia'>('pollinations')
+  const [selectedService, setSelectedService] = useState<'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia' | 'comfyui-local'>('comfyui-local')
   const [generatedSprites, setGeneratedSprites] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'generate' | 'saved'>('generate')
 

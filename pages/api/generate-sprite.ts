@@ -7,6 +7,7 @@ import { generateWithReplicate } from '../../src/lib/replicate'
 import { generateWithPollinations } from '../../src/lib/pollinations'
 import { generateWithSegmind } from '../../src/lib/segmind'
 import { generateWithProdia } from '../../src/lib/prodia'
+import { generateWithComfyUI } from '../../src/lib/comfyui-local'
 import { ImageStorage } from '../../src/lib/imageStorage'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -25,8 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       success: true,
       message: 'AI Sprite Generation API',
-      services: ['aws', 'azure', 'google', 'huggingface', 'replicate', 'pollinations', 'segmind', 'prodia'],
-      freeServices: ['huggingface', 'replicate', 'pollinations', 'segmind', 'prodia'],
+      services: ['aws', 'azure', 'google', 'huggingface', 'replicate', 'pollinations', 'segmind', 'prodia', 'comfyui-local'],
+      freeServices: ['huggingface', 'replicate', 'pollinations', 'segmind', 'prodia', 'comfyui-local'],
+      localServices: ['comfyui-local'],
       version: '1.0.0',
       timestamp: new Date().toISOString()
     })
@@ -82,10 +84,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'prodia':
         result = await generateWithProdia(prompt, model || 'dreamlike-anime')
         break
+      case 'comfyui-local':
+        result = await generateWithComfyUI(prompt, model || 'sdxl')
+        break
       default:
         return res.status(400).json({
           success: false,
-          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate, pollinations, segmind, prodia`
+          error: `Unknown service: ${service}. Available services: aws, azure, google, huggingface, replicate, pollinations, segmind, prodia, comfyui-local`
         })
     }
 
