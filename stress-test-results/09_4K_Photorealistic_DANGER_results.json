@@ -1,0 +1,21 @@
+{
+  "level": 9,
+  "name": "09_4K_Photorealistic_DANGER",
+  "description": "4K photorealistic - GPU limit test",
+  "settings": {
+    "width": 2048,
+    "height": 2048,
+    "steps": 150,
+    "cfg": 10,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "expectedTime": "18-25 minutes",
+    "actualTimeSeconds": 1069,
+    "actualTimeFormatted": "17m 49s",
+    "vramUsage": "~6GB - VRAM LIMIT WARNING"
+  },
+  "timestamp": "2025-09-12T11:52:50.052Z",
+  "success": true
+}

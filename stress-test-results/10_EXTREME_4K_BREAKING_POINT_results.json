@@ -1,0 +1,21 @@
+{
+  "level": 10,
+  "name": "10_EXTREME_4K_BREAKING_POINT",
+  "description": "EXTREME 4K+ - RTX 3050 breaking point",
+  "settings": {
+    "width": 2048,
+    "height": 2048,
+    "steps": 200,
+    "cfg": 11,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "expectedTime": "25+ minutes",
+    "actualTimeSeconds": 1409,
+    "actualTimeFormatted": "23m 29s",
+    "vramUsage": "6GB+ - LIKELY TO CRASH"
+  },
+  "timestamp": "2025-09-12T12:16:59.150Z",
+  "success": true
+}

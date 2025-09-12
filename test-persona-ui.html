@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Persona UI Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .persona-card { 
+            border: 2px solid #ccc; 
+            padding: 15px; 
+            margin: 10px; 
+            border-radius: 8px; 
+            cursor: pointer;
+        }
+        .persona-card:hover { background-color: #f0f0f0; }
+        .persona-card.selected { 
+            border-color: #007bff; 
+            background-color: #e7f3ff; 
+        }
+        .mode-indicator {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        .photographer-mode {
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .designer-mode {
+            background: linear-gradient(to right, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Persona UI Test</h1>
+    <p>This tests if the persona selection and UI changes are working correctly.</p>
+    
+    <h2>Select Your Persona:</h2>
+    
+    <div class="persona-card" onclick="selectPersona('photographer')">
+        <h3>📸 Photographer/Artist</h3>
+        <p>I want ultra-high quality photorealistic images</p>
+    </div>
+    
+    <div class="persona-card" onclick="selectPersona('designer')">
+        <h3>🎨 UI/UX Designer</h3>
+        <p>I create icons, buttons, and interface mockups</p>
+    </div>
+    
+    <div class="persona-card" onclick="selectPersona('developer')">
+        <h3>🎮 Game Developer</h3>
+        <p>I need high-quality sprites for my games</p>
+    </div>
+    
+    <div class="persona-card" onclick="selectPersona('teacher')">
+        <h3>👨🏫 Teacher/Parent</h3>
+        <p>I want safe, educational content for kids</p>
+    </div>
+    
+    <div id="photographer-indicator" class="mode-indicator photographer-mode">
+        <h3>📸 Studio-Quality Photography Mode Active</h3>
+        <p>Ultra-high resolution (1024x1024), photorealistic rendering, professional lighting and composition.</p>
+        <div>
+            <span style="background: rgba(59, 130, 246, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">4K Ready</span>
+            <span style="background: rgba(147, 51, 234, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">Studio Lighting</span>
+            <span style="background: rgba(236, 72, 153, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">Professional Quality</span>
+        </div>
+    </div>
+    
+    <div id="designer-indicator" class="mode-indicator designer-mode">
+        <h3>🎨 UI/UX Design Mode Active</h3>
+        <p>Clean vector-style icons, perfect for interfaces, buttons, and UI elements.</p>
+        <div>
+            <span style="background: rgba(147, 51, 234, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">Vector Style</span>
+            <span style="background: rgba(236, 72, 153, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">Clean Design</span>
+            <span style="background: rgba(59, 130, 246, 0.3); padding: 4px 8px; border-radius: 12px; margin: 2px;">UI Ready</span>
+        </div>
+    </div>
+    
+    <div id="status">
+        <h3>Current Status:</h3>
+        <p id="current-persona">No persona selected</p>
+        <p id="current-model">No model selected</p>
+        <p id="current-prompts">No specialized prompts</p>
+    </div>
+    
+    <script>
+        let selectedPersona = null;
+        
+        function selectPersona(persona) {
+            // Clear previous selections
+            document.querySelectorAll('.persona-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelectorAll('.mode-indicator').forEach(indicator => {
+                indicator.style.display = 'none';
+            });
+            
+            // Select new persona
+            event.target.closest('.persona-card').classList.add('selected');
+            selectedPersona = persona;
+            
+            // Show appropriate mode indicator
+            if (persona === 'photographer') {
+                document.getElementById('photographer-indicator').style.display = 'block';
+                updateStatus('Photographer/Artist', 'photorealistic-ultra', [
+                    'professional portrait with studio lighting',
+                    'cinematic landscape with dramatic lighting',
+                    'high-end fashion photography'
+                ]);
+            } else if (persona === 'designer') {
+                document.getElementById('designer-indicator').style.display = 'block';
+                updateStatus('UI/UX Designer', 'ui-asset-clean', [
+                    'clean home icon for mobile app',
+                    'modern settings gear icon',
+                    'minimalist user profile icon'
+                ]);
+            } else {
+                updateStatus(persona, 'sdxl-base', ['Standard game/educational prompts']);
+            }
+        }
+        
+        function updateStatus(persona, model, prompts) {
+            document.getElementById('current-persona').textContent = `Selected: ${persona}`;
+            document.getElementById('current-model').textContent = `Default Model: ${model}`;
+            document.getElementById('current-prompts').textContent = `Specialized Prompts: ${prompts.join(', ')}`;
+        }
+    </script>
+</body>
+</html>

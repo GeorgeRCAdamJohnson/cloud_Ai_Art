@@ -4,24 +4,8 @@
 [build.environment]
   NODE_VERSION = "18"
   NPM_FLAGS = "--production=false"
-  # Environment variables are passed from GitHub Actions
   SKIP_PREFLIGHT_CHECK = "true"
 
 # Essential plugin for Next.js - handles everything automatically
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# Functions configuration for Next.js Pages Router
-[functions]
-  directory = ".netlify/functions"
-  node_bundler = "esbuild"
-  # Extended timeout for ComfyUI generation (max 900s for Pro plans)
-  timeout = 900
-
-# API routes handling for Next.js Pages Router - let @netlify/plugin-nextjs handle automatically
-
-# Fallback for client-side routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200

@@ -1,0 +1,223 @@
+{
+  "testCompleted": "2025-09-12T12:16:59.194Z",
+  "levelsCompleted": 10,
+  "totalLevels": 10,
+  "performanceRating": "🔥 EXTREME - GPU BEAST",
+  "qualityAssessment": {
+    "optimalRange": "Levels 5-7 (1024x1024 to 1536x1536, 50-100 steps)",
+    "qualityDegradation": "Levels 8-10 show progressive object disfigurement despite higher technical settings",
+    "recommendation": "Level 7 (1536x1536, 100 steps) provides best quality-to-performance ratio"
+  },
+  "results": [
+    {
+      "level": 1,
+      "name": "01_UltraFast_Cartoon",
+      "description": "Ultra fast cartoon style",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 8,
+        "cfg": 5,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "expectedTime": "8-10 seconds",
+        "actualTimeSeconds": 20,
+        "actualTimeFormatted": "20s",
+        "vramUsage": "~2GB"
+      },
+      "timestamp": "2025-09-12T11:14:03.587Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "02_Fast_Cartoon",
+      "description": "Fast cartoon with better quality",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 15,
+        "cfg": 6,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "expectedTime": "15-20 seconds",
+        "actualTimeSeconds": 20,
+        "actualTimeFormatted": "20s",
+        "vramUsage": "~2.5GB"
+      },
+      "timestamp": "2025-09-12T11:14:38.705Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "03_Quality_Cartoon",
+      "description": "High quality cartoon style",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 25,
+        "cfg": 7,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "expectedTime": "30-45 seconds",
+        "actualTimeSeconds": 35,
+        "actualTimeFormatted": "35s",
+        "vramUsage": "~3GB"
+      },
+      "timestamp": "2025-09-12T11:15:28.803Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "04_Disney_Quality",
+      "description": "Disney/Pixar studio quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 40,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "expectedTime": "1-2 minutes",
+        "actualTimeSeconds": 50,
+        "actualTimeFormatted": "50s",
+        "vramUsage": "~3.5GB"
+      },
+      "timestamp": "2025-09-12T11:16:33.907Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "05_SemiRealistic",
+      "description": "Semi-realistic high quality",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 50,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "2-4 minutes",
+        "actualTimeSeconds": 85,
+        "actualTimeFormatted": "1m 25s",
+        "vramUsage": "~4GB"
+      },
+      "timestamp": "2025-09-12T11:18:14.072Z",
+      "success": true
+    },
+    {
+      "level": 6,
+      "name": "06_Photorealistic_Standard",
+      "description": "Photorealistic standard quality",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 80,
+        "cfg": 8.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "4-8 minutes",
+        "actualTimeSeconds": 135,
+        "actualTimeFormatted": "2m 15s",
+        "vramUsage": "~4.5GB"
+      },
+      "timestamp": "2025-09-12T11:20:44.402Z",
+      "success": true
+    },
+    {
+      "level": 7,
+      "name": "07_Photorealistic_High",
+      "description": "High-end photorealistic",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 100,
+        "cfg": 9,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "8-12 minutes",
+        "actualTimeSeconds": 351,
+        "actualTimeFormatted": "5m 51s",
+        "vramUsage": "~5GB"
+      },
+      "timestamp": "2025-09-12T11:26:50.107Z",
+      "success": true
+    },
+    {
+      "level": 8,
+      "name": "08_Ultra_Photorealistic",
+      "description": "Ultra photorealistic quality",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 120,
+        "cfg": 9.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "12-18 minutes",
+        "actualTimeSeconds": 431,
+        "actualTimeFormatted": "7m 11s",
+        "vramUsage": "~5.5GB"
+      },
+      "timestamp": "2025-09-12T11:34:30.993Z",
+      "success": true
+    },
+    {
+      "level": 9,
+      "name": "09_4K_Photorealistic_DANGER",
+      "description": "4K photorealistic - GPU limit test",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 150,
+        "cfg": 10,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "18-25 minutes",
+        "actualTimeSeconds": 1069,
+        "actualTimeFormatted": "17m 49s",
+        "vramUsage": "~6GB - VRAM LIMIT WARNING"
+      },
+      "timestamp": "2025-09-12T11:52:50.052Z",
+      "success": true
+    },
+    {
+      "level": 10,
+      "name": "10_EXTREME_4K_BREAKING_POINT",
+      "description": "EXTREME 4K+ - RTX 3050 breaking point",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 200,
+        "cfg": 11,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "expectedTime": "25+ minutes",
+        "actualTimeSeconds": 1409,
+        "actualTimeFormatted": "23m 29s",
+        "vramUsage": "6GB+ - LIKELY TO CRASH"
+      },
+      "timestamp": "2025-09-12T12:16:59.150Z",
+      "success": true
+    }
+  ]
+}

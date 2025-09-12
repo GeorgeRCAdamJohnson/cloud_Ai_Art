@@ -1,59 +1,27 @@
-// Test ComfyUI connection specifically
-async function testComfyUIConnection() {
-  console.log('Testing ComfyUI Local connection...\n');
+// Simple test to check ComfyUI connection
+async function testComfyUI() {
+  const serverUrl = 'http://localhost:8188'
   
   try {
-    const response = await fetch('http://localhost:3002/api/generate-sprite', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: 'test connection',
-        service: 'comfyui-local',
-        model: 'sdxl',
-        comfyUIOptions: {
-          quality: 'optimized'
-        }
-      })
-    });
+    console.log('Testing ComfyUI connection...')
     
-    const result = await response.json();
+    // Test basic connection
+    const response = await fetch(`${serverUrl}/system_stats`)
+    console.log('Connection status:', response.status)
     
     if (response.ok) {
-      console.log('✅ API Response successful');
-      console.log('Response:', JSON.stringify(result, null, 2));
+      const stats = await response.json()
+      console.log('ComfyUI is running:', stats)
     } else {
-      console.log('❌ API Error:', response.status);
-      console.log('Error details:', JSON.stringify(result, null, 2));
+      console.log('ComfyUI not responding properly')
     }
     
   } catch (error) {
-    console.error('❌ Connection failed:', error.message);
+    console.error('Connection failed:', error.message)
+    console.log('\nTo fix this:')
+    console.log('1. Make sure ComfyUI is running')
+    console.log('2. Start with: python main.py --listen --port 8188 --enable-cors-header "*"')
   }
 }
 
-// Also test direct ComfyUI connection
-async function testDirectComfyUI() {
-  console.log('\nTesting direct ComfyUI connection...\n');
-  
-  try {
-    // Test if ComfyUI is responding
-    const historyResponse = await fetch('http://localhost:8188/history');
-    console.log('ComfyUI History endpoint:', historyResponse.status, historyResponse.ok ? '✅' : '❌');
-    
-    // Test system stats
-    const systemResponse = await fetch('http://localhost:8188/system_stats');
-    console.log('ComfyUI System Stats:', systemResponse.status, systemResponse.ok ? '✅' : '❌');
-    
-    // Test queue
-    const queueResponse = await fetch('http://localhost:8188/queue');
-    console.log('ComfyUI Queue endpoint:', queueResponse.status, queueResponse.ok ? '✅' : '❌');
-    
-  } catch (error) {
-    console.error('❌ Direct ComfyUI connection failed:', error.message);
-  }
-}
-
-testComfyUIConnection();
-testDirectComfyUI();
+testComfyUI()

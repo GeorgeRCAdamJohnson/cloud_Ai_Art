@@ -1,0 +1,20 @@
+{
+  "level": 5,
+  "name": "CONSISTENCY_1536_Conservative",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 60,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "actualTimeSeconds": 211,
+    "actualTimeFormatted": "3m 31s",
+    "seed": 42424242,
+    "characterPrompt": "portrait of Emma Stone as a medieval knight, detailed armor, green eyes, red hair in braids, confident expression, fantasy art style"
+  },
+  "timestamp": "2025-09-12T15:54:10.047Z",
+  "success": true
+}

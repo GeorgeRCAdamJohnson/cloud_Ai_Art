@@ -1,0 +1,21 @@
+{
+  "level": 7,
+  "name": "07_Photorealistic_High",
+  "description": "High-end photorealistic",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 100,
+    "cfg": 9,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "expectedTime": "8-12 minutes",
+    "actualTimeSeconds": 351,
+    "actualTimeFormatted": "5m 51s",
+    "vramUsage": "~5GB"
+  },
+  "timestamp": "2025-09-12T11:26:50.107Z",
+  "success": true
+}

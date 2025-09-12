@@ -17,11 +17,14 @@ const RESOLUTION_PRESETS = {
   'square-small': { width: 512, height: 512, name: 'Square Small (512×512)', icon: '📱' },
   'square-medium': { width: 768, height: 768, name: 'Square Medium (768×768)', icon: '🖥️' },
   'square-large': { width: 1024, height: 1024, name: 'Square Large (1024×1024)', icon: '🖼️' },
+  'square-xl': { width: 1536, height: 1536, name: 'Square XL (1536×1536)', icon: '🖼️' },
   'portrait': { width: 768, height: 1024, name: 'Portrait (768×1024)', icon: '📄' },
+  'portrait-hd': { width: 1080, height: 1920, name: 'Portrait HD (1080×1920)', icon: '📱' },
   'landscape': { width: 1024, height: 768, name: 'Landscape (1024×768)', icon: '🌄' },
+  'landscape-hd': { width: 1920, height: 1080, name: 'Landscape HD (1920×1080)', icon: '🖥️' },
   'sprite': { width: 512, height: 640, name: 'Game Sprite (512×640)', icon: '🎮' },
   'banner': { width: 1280, height: 720, name: 'Banner (1280×720)', icon: '🏷️' },
-  'custom': { width: 768, height: 768, name: 'Custom Size', icon: '⚙️' }
+  'custom': { width: 1024, height: 1024, name: 'Custom Size', icon: '⚙️' }
 } as const
 
 const QUALITY_PRESETS = {
@@ -49,10 +52,10 @@ const QUALITY_PRESETS = {
 } as const
 
 export default function ComfyUISettings({ isVisible, onSettingsChange }: ComfyUISettingsProps) {
-  const [selectedResolution, setSelectedResolution] = useState<keyof typeof RESOLUTION_PRESETS>('square-medium')
-  const [selectedQuality, setSelectedQuality] = useState<keyof typeof QUALITY_PRESETS>('optimized')
-  const [customWidth, setCustomWidth] = useState(768)
-  const [customHeight, setCustomHeight] = useState(768)
+  const [selectedResolution, setSelectedResolution] = useState<keyof typeof RESOLUTION_PRESETS>('square-large')
+  const [selectedQuality, setSelectedQuality] = useState<keyof typeof QUALITY_PRESETS>('high')
+  const [customWidth, setCustomWidth] = useState(1024)
+  const [customHeight, setCustomHeight] = useState(1024)
   const [showAdvanced, setShowAdvanced] = useState(false)
 
   const handleResolutionChange = (resolution: keyof typeof RESOLUTION_PRESETS) => {
@@ -231,7 +234,7 @@ export default function ComfyUISettings({ isVisible, onSettingsChange }: ComfyUI
             <Clock className="w-5 h-5" />
             <div className="text-sm">
               <strong>Ultra Quality Notice:</strong> This setting uses maximum quality parameters and can take up to 10 minutes to generate. 
-              Perfect for final artwork but consider "High Quality" for faster iterations.
+              Perfect for final artwork but consider &quot;High Quality&quot; for faster iterations.
             </div>
           </div>
         </div>

@@ -1,0 +1,21 @@
+{
+  "level": 6,
+  "name": "06_Photorealistic_Standard",
+  "description": "Photorealistic standard quality",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 80,
+    "cfg": 8.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "expectedTime": "4-8 minutes",
+    "actualTimeSeconds": 135,
+    "actualTimeFormatted": "2m 15s",
+    "vramUsage": "~4.5GB"
+  },
+  "timestamp": "2025-09-12T11:20:44.402Z",
+  "success": true
+}

@@ -46,3 +46,12 @@ logs
 
 # Local Netlify folder
 .netlify
+
+# Generated Images - Don't commit AI art to git
+public/generated-sprites/*.png
+public/generated-sprites/*.jpg
+public/generated-sprites/*.jpeg
+public/generated-sprites/*.webp
+
+# Keep the folder structure but ignore images
+!public/generated-sprites/.gitkeep

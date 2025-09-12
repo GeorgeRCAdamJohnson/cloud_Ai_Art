@@ -2,28 +2,40 @@
 
 import { useState } from 'react'
 import SpriteGenerator from '@/components/SpriteGenerator'
-import CloudServiceSelector from '@/components/CloudServiceSelector'
+import ServiceSelector from '@/components/ServiceSelector'
 import SpriteGallery from '@/components/SpriteGallery'
 import SavedImagesManager from '@/components/SavedImagesManager'
+import ParentalControls from '@/components/ParentalControls'
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState<'aws' | 'azure' | 'google' | 'huggingface' | 'replicate' | 'pollinations' | 'segmind' | 'prodia' | 'comfyui-local'>('comfyui-local')
   const [generatedSprites, setGeneratedSprites] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState<'generate' | 'saved'>('generate')
+  const [isKidsMode, setIsKidsMode] = useState(true)
+  const [selectedPersona, setSelectedPersona] = useState<string | null>(null)
+  const [defaultModel, setDefaultModel] = useState<string | null>(null)
 
   const handleSpriteGenerated = (sprite: any) => {
     setGeneratedSprites(prev => [...prev, sprite])
   }
 
+  const handlePersonaChange = (persona: string | null, model?: string) => {
+    setSelectedPersona(persona)
+    setDefaultModel(model || null)
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
+      {/* Parental Controls */}
+      <ParentalControls onModeChange={setIsKidsMode} />
+      
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            Cloud AI Art Studio
+            🎨 Family Art Studio
           </h1>
           <p className="text-xl text-white/90 mb-8">
-            Generate amazing 2D game sprites for kids games using AI
+            Create amazing characters and sprites together! 👨👩👧👦✨
           </p>
           
           {/* Tab Navigation */}
@@ -36,7 +48,7 @@ export default function Home() {
                   : 'bg-white/20 text-white hover:bg-white/30'
               }`}
             >
-              🎨 Generate Sprites
+              ✨ Create Art
             </button>
             <button
               onClick={() => setActiveTab('saved')}
@@ -46,7 +58,7 @@ export default function Home() {
                   : 'bg-white/20 text-white hover:bg-white/30'
               }`}
             >
-              💾 Saved Images
+              🖼️ My Gallery
             </button>
           </div>
         </header>
@@ -54,20 +66,21 @@ export default function Home() {
         {/* Tab Content */}
         {activeTab === 'generate' ? (
           <>
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1">
-                <CloudServiceSelector 
-                  selectedService={selectedService}
-                  onServiceChange={setSelectedService}
-                />
-              </div>
-              
-              <div className="lg:col-span-2">
-                <SpriteGenerator 
-                  selectedService={selectedService}
-                  onSpriteGenerated={handleSpriteGenerated}
-                />
-              </div>
+            <ServiceSelector 
+              selectedService={selectedService}
+              onServiceChange={setSelectedService}
+              isKidsMode={isKidsMode}
+              onPersonaChange={handlePersonaChange}
+            />
+            
+            <div className="mt-8">
+              <SpriteGenerator 
+                selectedService={selectedService}
+                onSpriteGenerated={handleSpriteGenerated}
+                isKidsMode={isKidsMode}
+                selectedPersona={selectedPersona}
+                defaultModel={defaultModel}
+              />
             </div>
 
             <div className="mt-12">

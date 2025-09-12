@@ -1,0 +1,21 @@
+{
+  "level": 8,
+  "name": "08_Ultra_Photorealistic",
+  "description": "Ultra photorealistic quality",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 120,
+    "cfg": 9.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "expectedTime": "12-18 minutes",
+    "actualTimeSeconds": 431,
+    "actualTimeFormatted": "7m 11s",
+    "vramUsage": "~5.5GB"
+  },
+  "timestamp": "2025-09-12T11:34:30.993Z",
+  "success": true
+}

@@ -1,0 +1,21 @@
+{
+  "level": 4,
+  "name": "04_Disney_Quality",
+  "description": "Disney/Pixar studio quality",
+  "settings": {
+    "width": 768,
+    "height": 768,
+    "steps": 40,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "expectedTime": "1-2 minutes",
+    "actualTimeSeconds": 50,
+    "actualTimeFormatted": "50s",
+    "vramUsage": "~3.5GB"
+  },
+  "timestamp": "2025-09-12T11:16:33.907Z",
+  "success": true
+}

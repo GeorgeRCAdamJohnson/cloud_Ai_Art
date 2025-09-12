@@ -1,0 +1,21 @@
+{
+  "level": 3,
+  "name": "03_Quality_Cartoon",
+  "description": "High quality cartoon style",
+  "settings": {
+    "width": 768,
+    "height": 768,
+    "steps": 25,
+    "cfg": 7,
+    "sampler": "euler_ancestral",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "expectedTime": "30-45 seconds",
+    "actualTimeSeconds": 35,
+    "actualTimeFormatted": "35s",
+    "vramUsage": "~3GB"
+  },
+  "timestamp": "2025-09-12T11:15:28.803Z",
+  "success": true
+}

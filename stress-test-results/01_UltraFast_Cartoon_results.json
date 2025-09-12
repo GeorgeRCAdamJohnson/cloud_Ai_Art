@@ -1,0 +1,21 @@
+{
+  "level": 1,
+  "name": "01_UltraFast_Cartoon",
+  "description": "Ultra fast cartoon style",
+  "settings": {
+    "width": 512,
+    "height": 512,
+    "steps": 8,
+    "cfg": 5,
+    "sampler": "euler",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "expectedTime": "8-10 seconds",
+    "actualTimeSeconds": 20,
+    "actualTimeFormatted": "20s",
+    "vramUsage": "~2GB"
+  },
+  "timestamp": "2025-09-12T11:14:03.587Z",
+  "success": true
+}

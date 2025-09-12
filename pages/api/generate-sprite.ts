@@ -10,6 +10,15 @@ import { generateWithProdia } from '../../src/lib/prodia'
 import { generateWithComfyUI } from '../../src/lib/comfyui-local'
 import { ImageStorage } from '../../src/lib/imageStorage'
 
+// Configure API route to handle larger requests (for base64 images)
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '15mb',
+    },
+  },
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -89,6 +98,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         result = await generateWithProdia(prompt, model || 'dreamlike-anime')
         break
       case 'comfyui-local':
+        console.log('Starting ComfyUI generation...')
         const options = comfyUIOptions || {}
         // Pass custom settings and consistency option if provided
         if (options.customSettings) {
@@ -98,11 +108,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             options.consistentSeed = options.customSettings.consistentSeed
           }
         }
+        console.log('Calling generateWithComfyUI with:', { prompt, model: model || 'sdxl', options })
         result = await generateWithComfyUI(
           prompt, 
           model || 'sdxl',
           options
         )
+        console.log('ComfyUI generation completed, result:', !!result?.imageUrl)
         break
       default:
         return res.status(400).json({
@@ -127,6 +139,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       } else {
         // Save the generated image (local development)
         try {
+          console.log('Attempting to save image...', {
+            hasImageUrl: !!result.imageUrl,
+            imageUrlLength: result.imageUrl?.length,
+            prompt,
+            service
+          })
           const savedImage = await ImageStorage.saveImage(
             result.imageUrl, 
             prompt, 
@@ -134,7 +152,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             result.metadata?.model || 'unknown'
           )
           
-          console.log('Image saved:', savedImage.filename)
+          console.log('Image saved successfully:', savedImage.filename)
           
           return res.status(200).json({
             success: true,
