@@ -1,0 +1,40 @@
+{
+  "testId": "Qwen2VL_AVOID_NOISE_VALLEY_landscape",
+  "model": {
+    "filename": "Qwen2VL.safetensors",
+    "name": "Qwen2VL",
+    "type": "multimodal",
+    "expectedStrength": "text_understanding",
+    "notes": "Multimodal model - may have different optimal settings"
+  },
+  "configuration": {
+    "name": "AVOID_NOISE_VALLEY",
+    "description": "Testing problematic 12-step range",
+    "settings": {
+      "steps": 12,
+      "cfg": 3,
+      "sampler": "dpmpp_2m",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~24s",
+    "purpose": "artifact_validation",
+    "warning": "Expected to show noise/artifacts"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 24,
+    "perStepSeconds": 0.17,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~1GB"
+  },
+  "analysis": {
+    "isOptimalRange": "NOISE_VALLEY",
+    "qualityExpectation": "Expected to show noise/artifacts",
+    "modelSpecificNotes": "Multimodal model - may have different optimal settings"
+  },
+  "timestamp": "2025-09-13T06:03:51.737Z",
+  "success": true
+}

@@ -1,0 +1,40 @@
+{
+  "testId": "AnimeArtDiffusionXL_AVOID_VERBOSE_VALLEY_character",
+  "model": {
+    "filename": "animeArtDiffusionXL_alpha3.safetensors",
+    "name": "AnimeArtDiffusionXL",
+    "type": "anime_specialist",
+    "expectedStrength": "anime_characters",
+    "notes": "Anime specialist - should excel at character generation"
+  },
+  "configuration": {
+    "name": "AVOID_VERBOSE_VALLEY",
+    "description": "Testing if 60 steps causes over-processing",
+    "settings": {
+      "steps": 60,
+      "cfg": 8,
+      "sampler": "dpmpp_2m",
+      "scheduler": "karras"
+    },
+    "expectedTime": "~120s",
+    "purpose": "verbose_validation",
+    "warning": "May be overly detailed/verbose"
+  },
+  "promptType": "character",
+  "prompt": "beautiful anime character, detailed face, expressive eyes, colorful hair, modern clothing, high quality digital art",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 120,
+    "perStepSeconds": 0.03,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~5GB"
+  },
+  "analysis": {
+    "isOptimalRange": "VERBOSE_RISK",
+    "qualityExpectation": "May be overly detailed/verbose",
+    "modelSpecificNotes": "Anime specialist - should excel at character generation"
+  },
+  "timestamp": "2025-09-13T06:07:33.247Z",
+  "success": true
+}

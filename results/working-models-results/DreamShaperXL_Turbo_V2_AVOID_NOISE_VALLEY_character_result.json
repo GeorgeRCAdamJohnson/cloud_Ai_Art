@@ -1,0 +1,43 @@
+{
+  "testId": "DreamShaperXL_Turbo_V2_AVOID_NOISE_VALLEY_character",
+  "model": {
+    "filename": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+    "name": "DreamShaperXL_Turbo_V2",
+    "type": "turbo_optimized",
+    "expectedStrength": "speed_quality_balance",
+    "notes": "Known working Turbo model - our baseline",
+    "fileSize": "6.9GB"
+  },
+  "configuration": {
+    "name": "AVOID_NOISE_VALLEY",
+    "description": "Testing problematic 12-step range",
+    "settings": {
+      "steps": 12,
+      "cfg": 3,
+      "sampler": "dpmpp_2m",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~24s",
+    "purpose": "artifact_validation",
+    "warning": "Expected to show noise/artifacts",
+    "bestFor": "validation"
+  },
+  "promptType": "character",
+  "prompt": "beautiful anime character, detailed face, expressive eyes, colorful hair, modern clothing, high quality digital art",
+  "performance": {
+    "actualTimeSeconds": 26,
+    "actualTimeFormatted": "26s",
+    "expectedTimeSeconds": 24,
+    "perStepSeconds": 2.17,
+    "performanceRating": "EXCELLENT",
+    "efficiency": "HIGH"
+  },
+  "analysis": {
+    "isOptimalRange": "TURBO_NOISE_VALLEY",
+    "qualityExpectation": "May show noise/artifacts (Turbo optimized)",
+    "modelSpecificNotes": "Known working Turbo model - our baseline",
+    "compatibility": "PERFECT"
+  },
+  "timestamp": "2025-09-13T06:17:44.458Z",
+  "success": true
+}

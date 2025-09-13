@@ -1,0 +1,33 @@
+{
+  "level": 2,
+  "name": "TURBO_768_Fast",
+  "description": "Turbo fast landscape - balanced speed/quality",
+  "settings": {
+    "width": 768,
+    "height": 768,
+    "steps": 8,
+    "cfg": 2.5,
+    "sampler": "euler_ancestral",
+    "scheduler": "normal"
+  },
+  "expectedTime": "~18s",
+  "use": "main_workflow",
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "performance": {
+    "actualTimeSeconds": 14,
+    "actualTimeFormatted": "14s",
+    "expectedTimeSeconds": 18,
+    "perStepSeconds": 1.75,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.1GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL",
+    "warningLevel": "none",
+    "qualityExpectation": "Clean, fast generation - no artifacts expected"
+  },
+  "timestamp": "2025-09-13T05:39:16.007Z",
+  "success": true
+}

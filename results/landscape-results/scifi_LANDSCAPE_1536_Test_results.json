@@ -1,0 +1,22 @@
+{
+  "level": 4,
+  "name": "LANDSCAPE_1536_Test",
+  "description": "Testing 1536 for landscapes (may work better than characters)",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 80,
+    "cfg": 8,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "performance": {
+    "actualTimeSeconds": 289,
+    "actualTimeFormatted": "4m 49s",
+    "vramUsage": "~7.5GB"
+  },
+  "timestamp": "2025-09-13T04:20:14.037Z",
+  "success": true
+}

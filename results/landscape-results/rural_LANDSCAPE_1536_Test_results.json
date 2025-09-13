@@ -1,0 +1,22 @@
+{
+  "level": 4,
+  "name": "LANDSCAPE_1536_Test",
+  "description": "Testing 1536 for landscapes (may work better than characters)",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 80,
+    "cfg": 8,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "performance": {
+    "actualTimeSeconds": 355,
+    "actualTimeFormatted": "5m 55s",
+    "vramUsage": "~7.5GB"
+  },
+  "timestamp": "2025-09-13T04:46:32.467Z",
+  "success": true
+}

@@ -1,0 +1,570 @@
+{
+  "testCompleted": "2025-09-13T05:50:34.689Z",
+  "testType": "TURBO_LANDSCAPE_OPTIMIZATION",
+  "modelTested": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "scenarios": {
+    "scifi": {
+      "description": "Futuristic sci-fi cityscape with Turbo optimization",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style"
+    },
+    "rural": {
+      "description": "Majestic mountain/forest landscape with Turbo optimization",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style"
+    }
+  },
+  "levelsCompleted": 12,
+  "totalLevels": 12,
+  "performanceAnalysis": {
+    "fastestGeneration": {
+      "level": 2,
+      "name": "TURBO_768_Fast",
+      "description": "Turbo fast landscape - balanced speed/quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 8,
+        "cfg": 2.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~18s",
+      "use": "main_workflow",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 14,
+        "actualTimeFormatted": "14s",
+        "expectedTimeSeconds": 18,
+        "perStepSeconds": 1.75,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.1GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:39:16.007Z",
+      "success": true
+    },
+    "slowestGeneration": {
+      "level": 4,
+      "name": "TURBO_1024_Quality",
+      "description": "Turbo quality mode for final outputs",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 60,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "expectedTime": "~120s",
+      "use": "portfolio_quality",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 102,
+        "actualTimeFormatted": "1m 42s",
+        "expectedTimeSeconds": 120,
+        "perStepSeconds": 1.7,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~1.9GB"
+      },
+      "analysis": {
+        "isOptimalRange": "QUALITY_MODE",
+        "warningLevel": "none",
+        "qualityExpectation": "High quality but slower - should be clean"
+      },
+      "timestamp": "2025-09-13T05:48:02.167Z",
+      "success": true
+    },
+    "averagePerStep": 2.295833333333333,
+    "optimalPerformance": [
+      24,
+      14,
+      18,
+      22,
+      14,
+      18
+    ],
+    "problematicResults": [
+      {
+        "level": 5,
+        "name": "AVOID_NoiseValley_12step",
+        "description": "Testing problematic 12-step range (should show artifacts)",
+        "settings": {
+          "width": 1024,
+          "height": 1024,
+          "steps": 12,
+          "cfg": 3,
+          "sampler": "dpmpp_2m",
+          "scheduler": "normal"
+        },
+        "expectedTime": "~24s",
+        "use": "artifact_test",
+        "warning": "EXPECTED TO SHOW VISUAL NOISE - This is the problematic range!",
+        "scenario": "scifi",
+        "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+        "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+        "performance": {
+          "actualTimeSeconds": 24,
+          "actualTimeFormatted": "24s",
+          "expectedTimeSeconds": 24,
+          "perStepSeconds": 2,
+          "performanceRating": "EXCELLENT",
+          "vramUsage": "~0.4GB"
+        },
+        "analysis": {
+          "isOptimalRange": "PROBLEMATIC",
+          "warningLevel": "EXPECTED_ARTIFACTS",
+          "qualityExpectation": "May show visual noise/artifacts in this step range"
+        },
+        "timestamp": "2025-09-13T05:42:38.748Z",
+        "success": true
+      },
+      {
+        "level": 5,
+        "name": "AVOID_NoiseValley_12step",
+        "description": "Testing problematic 12-step range (should show artifacts)",
+        "settings": {
+          "width": 1024,
+          "height": 1024,
+          "steps": 12,
+          "cfg": 3,
+          "sampler": "dpmpp_2m",
+          "scheduler": "normal"
+        },
+        "expectedTime": "~24s",
+        "use": "artifact_test",
+        "warning": "EXPECTED TO SHOW VISUAL NOISE - This is the problematic range!",
+        "scenario": "rural",
+        "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+        "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+        "performance": {
+          "actualTimeSeconds": 24,
+          "actualTimeFormatted": "24s",
+          "expectedTimeSeconds": 24,
+          "perStepSeconds": 2,
+          "performanceRating": "EXCELLENT",
+          "vramUsage": "~0.4GB"
+        },
+        "analysis": {
+          "isOptimalRange": "PROBLEMATIC",
+          "warningLevel": "EXPECTED_ARTIFACTS",
+          "qualityExpectation": "May show visual noise/artifacts in this step range"
+        },
+        "timestamp": "2025-09-13T05:48:46.306Z",
+        "success": true
+      }
+    ]
+  },
+  "keyFindings": {
+    "turboOptimization": "DreamShaperXL Turbo V2-SFW performance with landscapes",
+    "stepRangeValidation": "Testing 6-8 step optimal range vs 12-step noise valley",
+    "speedComparison": "Turbo vs SDXL Base performance comparison",
+    "qualityAnalysis": "Visual quality assessment across different step counts"
+  },
+  "results": [
+    {
+      "level": 1,
+      "name": "TURBO_512_UltraFast",
+      "description": "Turbo ultra fast landscape preview",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 6,
+        "cfg": 2,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~16s",
+      "use": "rapid_preview",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 24,
+        "actualTimeFormatted": "24s",
+        "expectedTimeSeconds": 16,
+        "perStepSeconds": 4,
+        "performanceRating": "GOOD",
+        "vramUsage": "~0GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:38:41.883Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "TURBO_768_Fast",
+      "description": "Turbo fast landscape - balanced speed/quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 8,
+        "cfg": 2.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~18s",
+      "use": "main_workflow",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 14,
+        "actualTimeFormatted": "14s",
+        "expectedTimeSeconds": 18,
+        "perStepSeconds": 1.75,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.1GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:39:16.007Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "TURBO_1024_Fast",
+      "description": "Turbo fast at full resolution",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 8,
+        "cfg": 2.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~25s",
+      "use": "production_ready",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 18,
+        "actualTimeFormatted": "18s",
+        "expectedTimeSeconds": 25,
+        "perStepSeconds": 2.25,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.3GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:39:54.093Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "TURBO_1024_Quality",
+      "description": "Turbo quality mode for final outputs",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 60,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "expectedTime": "~120s",
+      "use": "portfolio_quality",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 101,
+        "actualTimeFormatted": "1m 41s",
+        "expectedTimeSeconds": 120,
+        "perStepSeconds": 1.68,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~1.9GB"
+      },
+      "analysis": {
+        "isOptimalRange": "QUALITY_MODE",
+        "warningLevel": "none",
+        "qualityExpectation": "High quality but slower - should be clean"
+      },
+      "timestamp": "2025-09-13T05:41:54.626Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "AVOID_NoiseValley_12step",
+      "description": "Testing problematic 12-step range (should show artifacts)",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 12,
+        "cfg": 3,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~24s",
+      "use": "artifact_test",
+      "warning": "EXPECTED TO SHOW VISUAL NOISE - This is the problematic range!",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 24,
+        "actualTimeFormatted": "24s",
+        "expectedTimeSeconds": 24,
+        "perStepSeconds": 2,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.4GB"
+      },
+      "analysis": {
+        "isOptimalRange": "PROBLEMATIC",
+        "warningLevel": "EXPECTED_ARTIFACTS",
+        "qualityExpectation": "May show visual noise/artifacts in this step range"
+      },
+      "timestamp": "2025-09-13T05:42:38.748Z",
+      "success": true
+    },
+    {
+      "level": 6,
+      "name": "COMPARISON_SDXL_Base",
+      "description": "SDXL Base comparison (old workflow)",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 30,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "expectedTime": "~90s",
+      "use": "baseline_comparison",
+      "model": "sd_xl_base_1.0.safetensors",
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 67,
+        "actualTimeFormatted": "1m 7s",
+        "expectedTimeSeconds": 90,
+        "perStepSeconds": 2.23,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.9GB"
+      },
+      "analysis": {
+        "isOptimalRange": "UNKNOWN",
+        "warningLevel": "none",
+        "qualityExpectation": "Unknown quality characteristics"
+      },
+      "timestamp": "2025-09-13T05:44:05.327Z",
+      "success": true
+    },
+    {
+      "level": 1,
+      "name": "TURBO_512_UltraFast",
+      "description": "Turbo ultra fast landscape preview",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 6,
+        "cfg": 2,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~16s",
+      "use": "rapid_preview",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 22,
+        "actualTimeFormatted": "22s",
+        "expectedTimeSeconds": 16,
+        "perStepSeconds": 3.67,
+        "performanceRating": "GOOD",
+        "vramUsage": "~0GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:44:47.475Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "TURBO_768_Fast",
+      "description": "Turbo fast landscape - balanced speed/quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 8,
+        "cfg": 2.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~18s",
+      "use": "main_workflow",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 14,
+        "actualTimeFormatted": "14s",
+        "expectedTimeSeconds": 18,
+        "perStepSeconds": 1.75,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.1GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:45:21.588Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "TURBO_1024_Fast",
+      "description": "Turbo fast at full resolution",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 8,
+        "cfg": 2.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~25s",
+      "use": "production_ready",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 18,
+        "actualTimeFormatted": "18s",
+        "expectedTimeSeconds": 25,
+        "perStepSeconds": 2.25,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.3GB"
+      },
+      "analysis": {
+        "isOptimalRange": "OPTIMAL",
+        "warningLevel": "none",
+        "qualityExpectation": "Clean, fast generation - no artifacts expected"
+      },
+      "timestamp": "2025-09-13T05:45:59.687Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "TURBO_1024_Quality",
+      "description": "Turbo quality mode for final outputs",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 60,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "expectedTime": "~120s",
+      "use": "portfolio_quality",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 102,
+        "actualTimeFormatted": "1m 42s",
+        "expectedTimeSeconds": 120,
+        "perStepSeconds": 1.7,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~1.9GB"
+      },
+      "analysis": {
+        "isOptimalRange": "QUALITY_MODE",
+        "warningLevel": "none",
+        "qualityExpectation": "High quality but slower - should be clean"
+      },
+      "timestamp": "2025-09-13T05:48:02.167Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "AVOID_NoiseValley_12step",
+      "description": "Testing problematic 12-step range (should show artifacts)",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 12,
+        "cfg": 3,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "expectedTime": "~24s",
+      "use": "artifact_test",
+      "warning": "EXPECTED TO SHOW VISUAL NOISE - This is the problematic range!",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+      "performance": {
+        "actualTimeSeconds": 24,
+        "actualTimeFormatted": "24s",
+        "expectedTimeSeconds": 24,
+        "perStepSeconds": 2,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.4GB"
+      },
+      "analysis": {
+        "isOptimalRange": "PROBLEMATIC",
+        "warningLevel": "EXPECTED_ARTIFACTS",
+        "qualityExpectation": "May show visual noise/artifacts in this step range"
+      },
+      "timestamp": "2025-09-13T05:48:46.306Z",
+      "success": true
+    },
+    {
+      "level": 6,
+      "name": "COMPARISON_SDXL_Base",
+      "description": "SDXL Base comparison (old workflow)",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 30,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "expectedTime": "~90s",
+      "use": "baseline_comparison",
+      "model": "sd_xl_base_1.0.safetensors",
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "performance": {
+        "actualTimeSeconds": 68,
+        "actualTimeFormatted": "1m 8s",
+        "expectedTimeSeconds": 90,
+        "perStepSeconds": 2.27,
+        "performanceRating": "EXCELLENT",
+        "vramUsage": "~0.9GB"
+      },
+      "analysis": {
+        "isOptimalRange": "UNKNOWN",
+        "warningLevel": "none",
+        "qualityExpectation": "Unknown quality characteristics"
+      },
+      "timestamp": "2025-09-13T05:50:14.677Z",
+      "success": true
+    }
+  ]
+}

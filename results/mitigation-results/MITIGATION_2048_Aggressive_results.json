@@ -1,0 +1,20 @@
+{
+  "level": 7,
+  "name": "MITIGATION_2048_Aggressive",
+  "description": "Aggressive mitigation for 2048x2048",
+  "settings": {
+    "width": 2048,
+    "height": 2048,
+    "steps": 50,
+    "cfg": 6.5,
+    "sampler": "euler_ancestral",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "actualTimeSeconds": 381,
+    "actualTimeFormatted": "6m 21s",
+    "vramUsage": "~8.4GB"
+  },
+  "timestamp": "2025-09-12T17:07:54.194Z",
+  "success": true
+}

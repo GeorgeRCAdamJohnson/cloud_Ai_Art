@@ -1,0 +1,20 @@
+{
+  "level": 6,
+  "name": "BASELINE_2048_Original",
+  "description": "2048 original problematic settings",
+  "settings": {
+    "width": 2048,
+    "height": 2048,
+    "steps": 150,
+    "cfg": 10,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "actualTimeSeconds": 1053,
+    "actualTimeFormatted": "17m 33s",
+    "vramUsage": "~16.8GB"
+  },
+  "timestamp": "2025-09-12T17:00:48.611Z",
+  "success": true
+}

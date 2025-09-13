@@ -1,0 +1,39 @@
+{
+  "testId": "AnimeArtDiffusionXL_OPTIMAL_FAST_landscape",
+  "model": {
+    "filename": "animeArtDiffusionXL_alpha3.safetensors",
+    "name": "AnimeArtDiffusionXL",
+    "type": "anime_specialist",
+    "expectedStrength": "anime_characters",
+    "notes": "Anime specialist - should excel at character generation"
+  },
+  "configuration": {
+    "name": "OPTIMAL_FAST",
+    "description": "Validated optimal fast settings",
+    "settings": {
+      "steps": 8,
+      "cfg": 2.5,
+      "sampler": "euler_ancestral",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~18s",
+    "purpose": "main_workflow"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 18,
+    "perStepSeconds": 0.25,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.7GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL_TURBO",
+    "qualityExpectation": "Clean, efficient - optimal for production",
+    "modelSpecificNotes": "Anime specialist - should excel at character generation"
+  },
+  "timestamp": "2025-09-13T06:06:08.074Z",
+  "success": true
+}

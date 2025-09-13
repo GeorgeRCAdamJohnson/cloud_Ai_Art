@@ -1,0 +1,22 @@
+{
+  "level": 2,
+  "name": "LANDSCAPE_768_Quality",
+  "description": "Balanced landscape quality",
+  "settings": {
+    "width": 768,
+    "height": 768,
+    "steps": 40,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "normal"
+  },
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "performance": {
+    "actualTimeSeconds": 51,
+    "actualTimeFormatted": "51s",
+    "vramUsage": "~0.9GB"
+  },
+  "timestamp": "2025-09-13T04:37:51.989Z",
+  "success": true
+}

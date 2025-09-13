@@ -1,0 +1,39 @@
+{
+  "testId": "Qwen2VL_STANDARD_QUALITY_landscape",
+  "model": {
+    "filename": "Qwen2VL.safetensors",
+    "name": "Qwen2VL",
+    "type": "multimodal",
+    "expectedStrength": "text_understanding",
+    "notes": "Multimodal model - may have different optimal settings"
+  },
+  "configuration": {
+    "name": "STANDARD_QUALITY",
+    "description": "Standard quality comparable to SDXL Base 30-step",
+    "settings": {
+      "steps": 30,
+      "cfg": 7.5,
+      "sampler": "dpmpp_2m",
+      "scheduler": "karras"
+    },
+    "expectedTime": "~67s",
+    "purpose": "quality_comparison"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 67,
+    "perStepSeconds": 0.07,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~2.5GB"
+  },
+  "analysis": {
+    "isOptimalRange": "SDXL_SWEET_SPOT",
+    "qualityExpectation": "Should match SDXL Base quality",
+    "modelSpecificNotes": "Multimodal model - may have different optimal settings"
+  },
+  "timestamp": "2025-09-13T06:04:25.843Z",
+  "success": true
+}

@@ -1,0 +1,20 @@
+{
+  "level": 8,
+  "name": "MITIGATION_2048_Moderate",
+  "description": "Moderate mitigation for 2048x2048",
+  "settings": {
+    "width": 2048,
+    "height": 2048,
+    "steps": 80,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "actualTimeSeconds": 579,
+    "actualTimeFormatted": "9m 39s",
+    "vramUsage": "~13.4GB"
+  },
+  "timestamp": "2025-09-12T17:18:18.608Z",
+  "success": true
+}

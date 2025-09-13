@@ -1,414 +1,422 @@
-# Cloud AI Art Studio
+# Cloud AI Art - 2D Game Sprite Generator
 
-A lightweight AI art platform for generating 2D game sprites for kids' games, built with Next.js and integrating multiple AI services including **ComfyUI Local** with RTX 3050 6GB optimization.
+A lightweight AI-powered platform for generating 2D game sprites specifically designed for kids' games. This application provides an easy-to-use web interface that integrates with **FREE and paid** cloud AI services without the complexity of local model setup.
 
-## 🎯 Project Overview
+## 🆓 **FREE AI Opti## 📖 API Documentation
 
-Cloud AI Art Studio provides both cloud-based AI services and **unlimited free local generation** through ComfyUI integration, offering an easy-to-use interface for generating kid-friendly game sprites with professional quality.
-
-## ✨ Features
-
-### Core Functionality
-- **🎨 ComfyUI Local Integration**: RTX 3050 6GB optimized with unlimited free generation
-- **⚡ Multi-Tier Quality System**: Optimized (25-45s), High (2-5min), Ultra (up to 20min)
-- **🧠 Smart Memory Management**: Automatic VRAM usage calculation and safe parameter selection
-- **📐 Flexible Resolution Control**: 8 preset sizes plus custom resolution with memory warnings
-- **☁️ Multi-Service AI Integration**: Support for AWS Bedrock, Azure OpenAI, Google Cloud, Hugging Face, and Replicate
-- **👶 Kid-Friendly Content**: Automatic prompt enhancement for cartoon-style, colorful, safe content
-- **⚡ Real-time Generation**: Live sprite generation with progress indicators and VRAM monitoring
-- **💾 Image Storage**: Automatic saving and management of generated sprites with metadata
-- **🖼️ Gallery View**: Browse and manage your generated sprites
-
-### ComfyUI Local Features
-- **🆓 Unlimited Free Generation**: No API costs or usage limits
-- **🎮 RTX 3050 Optimization**: Hardware-aware memory management and throttling
-- **💎 Professional Quality**: SDXL Base 1.0 model for studio-grade results
-- **⏱️ Extended Timeout**: Up to 20 minutes for ultra-high quality generation
-- **📊 Real-time Monitoring**: VRAM usage, generation progress, and performance stats
-- **🔧 Automatic Parameter Adjustment**: Dynamic settings based on resolution and quality
-
-### Technical Features
-- **📱 Responsive Design**: Works on desktop and mobile devices
-- **🛡️ Error Handling**: Comprehensive error messages and fallback systems
-- **📝 TypeScript**: Full type safety throughout the application
-- **🎨 Modern UI**: Beautiful gradient interface with Tailwind CSS
-- **🔌 API Architecture**: RESTful API design with proper error handling
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- AI service API keys (optional for mock services)
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/GeorgeRCAdamJohnson/cloud_Ai_Art.git
-cd cloud_Ai_Art
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your API keys
-
-# Start development server
-npm run dev
+### Generate Sprite Endpoint
 ```
-
-Visit `http://localhost:3000` to see the application.
-
-## 🔧 Configuration
-
-### Environment Variables
-Create a `.env.local` file with your API keys:
-
-```env
-# Hugging Face (Free Tier Available)
-HUGGINGFACE_API_TOKEN=hf_your_token_here
-
-# Replicate (Free $5 Credit)
-REPLICATE_API_TOKEN=your_replicate_token_here
-
-# Premium Services (Optional)
-AWS_ACCESS_KEY_ID=your_aws_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret
-AWS_REGION=us-east-1
-
-AZURE_OPENAI_API_KEY=your_azure_key
-AZURE_OPENAI_ENDPOINT=your_azure_endpoint
-
-GOOGLE_CLOUD_PROJECT_ID=your_project_id
-GOOGLE_CLOUD_LOCATION=us-central1
-```
-
-### Supported AI Services
-
-| Service | Status | Cost | Quality | Speed | Description |
-|---------|--------|------|---------|--------|-------------|
-| **ComfyUI Local** | ✅ **Active** | **FREE (Unlimited)** | **Professional** | **25s-20min** | RTX 3050 optimized, SDXL model |
-| Hugging Face | ✅ Working | FREE (100/day) | High | Fast | FLUX.1-schnell model |
-| Replicate | ✅ Ready | $5 free credit | High | Medium | SDXL and other models |
-| AWS Bedrock | 🔧 Mock | Pay-per-use | Highest | Fast | Stable Diffusion XL |
-| Azure OpenAI | 🔧 Mock | Pay-per-use | Highest | Fast | DALL-E 3 |
-| Google Vertex AI | 🔧 Mock | Pay-per-use | High | Medium | Imagen models |
-
-### ComfyUI Local Specifications
-
-| Feature | RTX 3050 6GB Optimized |
-|---------|------------------------|
-| **Model** | SDXL Base 1.0 (6.9GB) |
-| **VRAM Management** | Automatic throttling, 5.1GB safe limit |
-| **Quality Levels** | Optimized/High/Ultra with hardware-aware settings |
-| **Resolutions** | 512×512 to 1280×720 + custom sizes |
-| **Timeout** | Up to 20 minutes for ultra quality |
-| **Monitoring** | Real-time VRAM usage and generation progress |
-
-## 🎮 Usage
-
-### ComfyUI Local Generation (Recommended)
-1. **Setup ComfyUI**: Follow the [ComfyUI Local Setup Guide](../COMFYUI_LOCAL_SETUP.md)
-2. **Select Service**: Choose "ComfyUI Local" from the service selector
-3. **Configure Settings**: 
-   - Choose resolution (8 presets + custom)
-   - Select quality level (Optimized/High/Ultra)
-   - Monitor VRAM usage estimates
-4. **Generate**: Enter prompt and generate unlimited sprites for free
-5. **Monitor Progress**: Watch real-time generation progress and VRAM usage
-
-### Cloud Service Generation
-1. **Select AI Service**: Choose from available cloud services
-2. **Enter Prompt**: Describe your sprite (e.g., "cute dragon character")
-3. **Generate**: Click the generate button and wait for results
-4. **Download**: Save individual sprites or view in the gallery
-
-### Managing Images
-1. **Automatic Saving**: All generated images are automatically saved with metadata
-2. **Gallery View**: Click "💾 Saved Images" to view all sprites
-3. **Download**: Click download button on any saved image
-4. **Delete**: Remove unwanted images to free up space
-5. **Metadata**: View generation details including service, model, resolution, and VRAM usage
-
-### ComfyUI Best Practices
-- **Start with Optimized**: Use "Optimized" quality for fast testing (25-45s)
-- **Monitor VRAM**: Check usage estimates before generation
-- **Resolution Guidelines**: 
-  - 768×768 or smaller for speed
-  - 1024×1024 for best quality within safe limits
-  - Custom sizes with memory warnings
-- **Quality Selection**:
-  - Optimized: Quick iterations and testing
-  - High: Production sprites with good quality
-  - Ultra: Maximum detail for hero characters (up to 20min)
-
-### General Best Practices
-- Use descriptive prompts (e.g., "friendly robot character with blue armor")
-- Keep prompts focused on single characters or objects
-- The system automatically adds kid-friendly styling terms
-- Try different AI services for varied artistic styles
-
-## 📁 Project Structure
-
-```
-cloud_Ai_Art/
-├── docs/                     # Documentation
-│   ├── ARCHITECTURE.md       # System architecture details
-│   └── README.md            # This file
-├── COMFYUI_LOCAL_SETUP.md   # ComfyUI setup guide
-├── COMFYUI_RTX3050_OPTIMIZATION_COMPLETE.md  # RTX 3050 optimization guide
-├── public/
-│   └── generated-sprites/    # Saved images storage
-├── src/
-│   ├── app/                  # Next.js app directory
-│   │   ├── api/             # API routes
-│   │   │   ├── generate-sprite/
-│   │   │   └── saved-images/
-│   │   ├── globals.css      # Global styles
-│   │   ├── layout.tsx       # Root layout
-│   │   └── page.tsx         # Main page
-│   ├── components/          # React components
-│   │   ├── CloudServiceSelector.tsx
-│   │   ├── ComfyUIModelSelector.tsx  # ComfyUI model selection
-│   │   ├── ComfyUISettings.tsx       # ComfyUI resolution/quality settings
-│   │   ├── SavedImagesManager.tsx
-│   │   ├── SpriteGallery.tsx
-│   │   └── SpriteGenerator.tsx
-│   └── lib/                 # Utility libraries
-│       ├── aws-bedrock.ts
-│       ├── azure-ai.ts
-│       ├── comfyui-local.ts  # ComfyUI Local integration
-│       ├── google-ai.ts
-│       ├── huggingface.ts
-│       ├── imageStorage.ts
-│       └── replicate.ts
-├── real-implementations/     # Production API implementations
-├── package.json
-├── vercel.json              # Vercel deployment config
-├── netlify.toml             # Netlify deployment config
-└── README.md
-```
-
-## 🔗 API Endpoints
-
-### POST `/api/generate-sprite`
-Generate a new sprite using specified AI service.
-
-**Request:**
-```json
+POST /api/generate-sprite
 {
   "prompt": "cute dragon character",
+  "service": "aws" | "azure" | "google" | "huggingface" | "replicate" | "comfyui-local",
+  "model": "sdxl-base" | "anime-sprite" | "cartoon-3d",
+  "comfyUIOptions": {
+    "width": 768,
+    "height": 768,
+    "quality": "optimized" | "high" | "ultra"
+  }
+}
+```
+
+### ComfyUI Local Options
+```json
+{
   "service": "comfyui-local",
   "model": "sdxl-base",
   "comfyUIOptions": {
     "width": 1024,
     "height": 1024,
-    "quality": "high"
+    "quality": "ultra"
   }
 }
 ```
 
-**Response (ComfyUI Local):**
+### Response Format
 ```json
 {
   "success": true,
-  "imageUrl": "data:image/png;base64,...",
+  "imageUrl": "data:image/png;base64,<base64_data>",
   "metadata": {
     "service": "comfyui-local",
     "model": "sdxl-base",
-    "prompt": "cute dragon character, cartoon style...",
+    "prompt": "cute dragon character",
     "resolution": "1024x1024",
-    "quality": "high",
-    "vramUsage": "4.8GB",
-    "generationTime": "3.2min",
-    "steps": 28,
-    "cfg": 7.0,
-    "timestamp": "2025-09-08T19:00:00.000Z",
-    "cost": "FREE"
-  },
-  "saved": {
-    "filename": "comfyui-local_cute_dragon_2025-09-08T19-00-00-000Z.png",
-    "url": "/generated-sprites/comfyui-local_cute_dragon_2025-09-08T19-00-00-000Z.png"
+    "quality": "ultra",
+    "vramUsage": "5.8GB",
+    "generationTime": "12.5min",
+    "timestamp": "2025-09-08T00:00:00.000Z"
   }
 }
 ```
 
-**Response (Cloud Services):**
-```json
-{
-  "success": true,
-  "imageUrl": "data:image/png;base64,...",
-  "metadata": {
-    "service": "huggingface",
-    "model": "FLUX.1-schnell",
-    "prompt": "cute dragon character, cartoon style...",
-    "timestamp": "2025-09-08T19:00:00.000Z",
-    "cost": "FREE"
-  },
-  "saved": {
-    "filename": "huggingface_cute_dragon_2025-09-08T19-00-00-000Z.png",
-    "url": "/generated-sprites/huggingface_cute_dragon_2025-09-08T19-00-00-000Z.png"
-  }
-}
-```
+### **Hugging Face** (Completely FREE)
+- ✅ **1000 images per month** at no cost
+- ✅ **No credit card required**
+- ✅ **Stable Diffusion models**
+- ✅ **Perfect for kids' sprites**
 
-### GET `/api/saved-images`
-Retrieve all saved images and storage statistics.
+### **Replicate** (FREE $5 Credit Monthly)  
+- ✅ **$5 free credit** every month
+- ✅ **SDXL model** (excellent quality)
+- ✅ **~100-500 sprites** per month free
 
-**Response:**
-```json
-{
-  "success": true,
-  "images": [...],
-  "stats": {
-    "totalImages": 5,
-    "totalSizeMB": "2.3",
-    "storageDir": "/path/to/storage"
-  }
-}
-```
+## 🚀 Features
 
-### DELETE `/api/saved-images?filename=image.png`
-Delete a specific saved image.
+- **🎨 ComfyUI Local Integration**: RTX 3050 6GB optimized with professional SDXL model and hardware-aware throttling
+- **⚡ Ultimate Performance**: 25-45s optimized generation, 2-5min high quality, up to 20min ultra quality
+- **🧠 Smart Memory Management**: Automatic VRAM usage calculation and safe parameter selection
+- **📐 Flexible Resolution Control**: 8 preset sizes plus custom resolution with memory impact warnings
+- **🎯 Quality System**: 3-tier system (Optimized/High/Ultra) with RTX 3050-specific parameter tuning
+- **💾 Hardware Optimized**: Perfect for RTX 3050 6GB - prevents VRAM overflow with intelligent throttling
+- **☁️ Multi-Cloud AI Integration**: Support for FREE (Hugging Face, Replicate) and paid services (AWS, Azure, Google)
+- **👶 Kid-Friendly Design**: Colorful, intuitive interface perfect for creating children's game assets
+- **🎮 2D Sprite Focused**: Optimized prompts and settings for game sprite generation
+- **⚡ Real-time Generation**: Fast sprite creation with live preview and VRAM monitoring
+- **💾 Download & Gallery**: Save and organize your generated sprites with metadata
+- **🆓 FREE OPTIONS**: Start generating immediately with free services or unlimited local generation
 
-## 🛠 Development
+## 🎯 Target Use Cases
 
-### Adding New AI Services
-1. Create service implementation in `src/lib/your-service.ts`
-2. Export `generateWithYourService` function
-3. Add service to the switch statement in `generate-sprite/route.ts`
-4. Update `CloudServiceSelector.tsx` with new option
+- **Indie Game Developers**: Quickly prototype character sprites for kids' games
+- **Educational Games**: Create engaging visual assets for learning applications
+- **Parents & Educators**: Generate custom characters for storytelling and activities
+- **Small Studios**: Cost-effective sprite generation without hiring artists
 
-### Customizing UI
-- Modify components in `src/components/`
-- Update styling in `src/app/globals.css`
-- Adjust Tailwind classes for design changes
+## ☁️ **AI Service Options**
 
-### Testing
+### 🚀 **ULTIMATE: ComfyUI Local (RTX 3050 Optimized)**
+
+### 🚀 **ULTIMATE: ComfyUI Local (RTX 3050 Optimized)**
+
+#### **ComfyUI Local** (UNLIMITED FREE)
+- **Cost**: FREE - Unlimited generation with no API costs
+- **Model**: SDXL Base 1.0 (Professional quality, versatile)
+- **Speed**: 25-45s (Optimized) | 2-5min (High) | up to 20min (Ultra)
+- **Quality**: Professional game-ready assets with studio-grade detail
+- **Hardware**: RTX 3050 6GB optimized with intelligent memory management
+- **Features**: 
+  - 🧠 **Smart VRAM Management**: Automatic parameter adjustment based on resolution
+  - 📐 **8 Resolution Presets**: From 512×512 to 1280×720 plus custom sizes
+  - ⚡ **3-Tier Quality System**: Optimized/High/Ultra with hardware-aware settings
+  - 🎯 **Memory-Safe Generation**: Prevents VRAM overflow with usage estimation
+  - ⏱️ **Extended Timeout**: Up to 20 minutes for ultra-high quality generation
+  - 🔄 **Real-time Monitoring**: Live VRAM usage and generation progress
+- **Setup**: Download SDXL model, run ComfyUI locally, configure workspace
+
+### 🆓 **FREE Services (Cloud-based)**
+
+#### **Hugging Face** (Completely FREE)
+- **Cost**: FREE - 1000 images per month
+- **Models**: Stable Diffusion 2.1
+- **Quality**: Good for sprites
+- **Setup**: Just sign up at huggingface.co
+
+#### **Replicate** (FREE Credit)
+- **Cost**: FREE $5 credit monthly (~100-500 images)
+- **Models**: SDXL (Stable Diffusion XL)
+- **Quality**: Excellent
+- **Setup**: Sign up at replicate.com
+
+### 💰 **Premium Services**
+
+#### **AWS Bedrock**
+- **Model**: Stable Diffusion XL
+- **Cost**: ~$0.04 per image
+- **Best For**: Production applications with consistent quality
+- **Setup**: AWS account + IAM permissions
+
+#### **Azure OpenAI (DALL-E 3)**
+- **Model**: DALL-E 3
+- **Cost**: ~$0.04 per image
+- **Best For**: High-quality artistic sprites
+- **Setup**: Azure subscription + OpenAI resource
+
+#### **Google Cloud Vertex AI**
+- **Model**: Imagen 2
+- **Cost**: ~$0.02-0.05 per image
+- **Best For**: Advanced AI features
+- **Setup**: Google Cloud project + Vertex AI API
+
+## 🛠️ Setup Instructions
+
+### Prerequisites
+- Node.js 18+ installed
+- **For ComfyUI Local**: RTX 3050/3060/4060 or better (6GB+ VRAM required)
+- **For ComfyUI Setup**: Python 3.8+ and Git
+- **For Cloud Services**: Cloud service account (AWS/Azure/Google)
+- Basic knowledge of environment variables
+
+### 1. Clone & Install
 ```bash
-# Run development server
+git clone <your-repo>
+cd cloud-ai-art
+npm install
+```
+
+### 2. ComfyUI Local Setup (Recommended for Unlimited FREE Generation)
+
+#### Download ComfyUI:
+```bash
+# Clone ComfyUI
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+
+# Install dependencies
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt
+```
+
+#### Download SDXL Model:
+```bash
+# Download the SDXL Base model (6.9GB)
+cd models/checkpoints
+# Download from: https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+# Place as: sd_xl_base_1.0.safetensors
+```
+
+#### Start ComfyUI Server:
+```bash
+cd ComfyUI
+python main.py --listen --port 8188
+```
+
+#### RTX 3050 Optimization Features:
+- **Automatic VRAM Management**: Prevents out-of-memory errors
+- **Dynamic Parameter Scaling**: Adjusts steps/CFG based on resolution
+- **Memory Usage Estimation**: Real-time VRAM usage calculation
+- **Safe Settings Calculation**: Hardware-aware parameter selection
+- **Extended Timeout Support**: Up to 20 minutes for ultra quality
+
+### 3. Environment Setup
+Copy `.env.example` to `.env.local` and configure your cloud credentials:
+
+#### For AWS Bedrock:
+1. Create IAM user with Bedrock permissions
+2. Get Access Key ID and Secret Access Key
+3. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+
+#### For Azure OpenAI:
+1. Create Azure OpenAI resource
+2. Deploy DALL-E 3 model
+3. Get endpoint URL and API key
+4. Set AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY
+
+#### For Google Cloud:
+1. Create Google Cloud project
+2. Enable Vertex AI API
+3. Create service account and download JSON key
+4. Set GOOGLE_CLOUD_PROJECT_ID and GOOGLE_APPLICATION_CREDENTIALS
+
+### 3. Run Development Server
+```bash
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Type checking
-npm run type-check
 ```
 
-## 🎨 Customization
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Prompt Enhancement
-The system automatically enhances user prompts with kid-friendly terms. Modify this in each service file:
+## 📱 How to Use
 
-```typescript
-const enhancedPrompt = `${prompt}, 2D game sprite, cartoon style, colorful, cute, friendly, simple background, kids game character`
-```
+1. **Choose Your AI Service**: Select AWS, Azure, or Google Cloud
+2. **Describe Your Sprite**: Enter a description like "cute dragon character"
+3. **Generate**: Click the generate button and wait for your sprite
+4. **Download**: Save your sprite as PNG with transparent background
+5. **Gallery**: View all your generated sprites in the gallery
 
-### UI Themes
-Update the gradient background and colors in `src/app/page.tsx`:
+## 🎨 Sprite Generation Tips
 
-```css
-bg-gradient-to-br from-purple-400 via-pink-500 to-red-500
-```
+### Effective Prompts:
+- "cute cartoon cat character jumping"
+- "friendly robot character for kids game"
+- "magical fairy with sparkly wings"
+- "brave knight character in colorful armor"
 
-## 📊 Monitoring & Analytics
+### Style Keywords:
+- "2D game sprite"
+- "pixel art style"
+- "cartoon style"
+- "kids friendly"
+- "colorful"
+- "simple design"
 
-### Storage Monitoring
-- View storage statistics in the "💾 Saved Images" tab
-- Monitor disk usage and total images
-- Clean up old images as needed
+## 💰 Cost Optimization
 
-### Error Logging
-- Check browser console for client-side errors
-- Monitor server logs for API errors
-- Review network requests for API debugging
+### Tips to Minimize Costs:
+1. **Start with AWS Bedrock**: Generally most cost-effective
+2. **Batch Generation**: Generate multiple sprites in sessions
+3. **Prompt Refinement**: Use detailed prompts to get desired results faster
+4. **Service Rotation**: Test different services to find best value
 
-## 🔒 Security
+### Expected Monthly Costs:
+- **Light Usage** (50 sprites): $2-5
+- **Medium Usage** (200 sprites): $8-20
+- **Heavy Usage** (500+ sprites): $20-50
 
-### API Key Management
-- Never commit API keys to version control
-- Use `.env.local` for local development
-- Use proper environment variables in production
+## 🔧 Customization
 
-### File Storage
-- Images are stored in `/public/generated-sprites/`
-- Direct access via URLs like `/generated-sprites/filename.png`
-- Consider implementing access controls for production
+### Adding New AI Services:
+1. Create new service file in `src/lib/`
+2. Implement `GenerationResult` interface
+3. Add service to `CloudServiceSelector` component
+4. Update API route in `generate-sprite/route.ts`
+
+### Styling Modifications:
+- Tailwind CSS for all styling
+- Modify `tailwind.config.js` for color schemes
+- Update components in `src/components/`
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-1. Connect GitHub repository to Vercel
-2. Add environment variables in Vercel dashboard
-3. Deploy automatically on git push
+### Vercel (Recommended):
+```bash
+npm install -g vercel
+vercel
+```
 
-### Other Platforms
-- **Netlify**: Full Next.js support
-- **Railway**: Docker deployment option
-- **Self-hosted**: Use `npm run build && npm start`
+### Other Platforms:
+- Netlify: Connect GitHub repo
+- Railway: Deploy from GitHub
+- AWS Amplify: Connect repository
+
+## 🔒 Security Notes
+
+- Never commit `.env` files to version control
+- Use IAM roles with minimal required permissions
+- Implement rate limiting for production use
+- Consider adding user authentication for multi-user scenarios
+
+## 🐛 Troubleshooting
+
+### Common Issues:
+
+**"Cannot find module" errors**:
+```bash
+npm install
+```
+
+**AI service authentication errors**:
+- Check environment variables are correctly set
+- Verify cloud service credentials and permissions
+
+**Images not generating**:
+- Check network connectivity
+- Verify API quotas and billing setup
+- Check browser console for detailed errors
+
+### ComfyUI Local Issues:
+
+**"ComfyUI server not running" error**:
+```bash
+# Start ComfyUI server
+cd ComfyUI
+python main.py --listen --port 8188
+```
+
+**VRAM out of memory errors**:
+- Use lower quality settings (Optimized instead of Ultra)
+- Reduce resolution (try 768×768 instead of 1024×1024)
+- Check VRAM usage in the UI before generation
+
+**Model file corrupted**:
+```bash
+# Re-download SDXL model
+cd ComfyUI/models/checkpoints
+# Download fresh copy of sd_xl_base_1.0.safetensors
+```
+
+**Slow generation times**:
+- Ensure you're using RTX 3050-optimized settings
+- Check GPU utilization in Task Manager
+- Use Optimized quality for faster results (25-45s)
+
+**Timeout errors**:
+- Ultra quality can take up to 20 minutes
+- Check ComfyUI server logs for actual progress
+- Ensure stable power supply for long generations
+
+## � Deployment
+
+### **FREE Deployment with GitHub Actions**
+
+Since Netlify environment variables require a paid subscription, we use **GitHub Secrets** (completely free) with automatic deployment:
+
+#### **Step 1: Set Up GitHub Secrets**
+1. Go to your GitHub repository settings
+2. Navigate to **Secrets and variables** → **Actions**
+3. Add these repository secrets:
+
+```
+HUGGINGFACEALL: [Your Hugging Face API Token from .env.local]
+NEXTAUTH_SECRET: cloud-ai-art-secret-2025-netlify-production
+NETLIFY_AUTH_TOKEN: [Your Netlify Personal Access Token]
+```
+
+#### **Step 2: Get Netlify Auth Token**
+1. Visit: https://app.netlify.com/user/applications#personal-access-tokens
+2. Create new token: "GitHub Actions Deploy"
+3. Copy token and add as `NETLIFY_AUTH_TOKEN` secret
+
+#### **Step 3: Deploy**
+```bash
+# Quick setup helper
+npm run setup-github-secrets
+
+# Push to trigger deployment
+git push origin main
+```
+
+#### **✅ Benefits**
+- **Completely FREE** - No paid Netlify subscription needed
+- **Automatic deployment** on every push to main
+- **Secure environment variables** stored in GitHub
+- **Proper API route handling** as serverless functions
+
+**📖 Detailed guide**: [`GITHUB_SECRETS_SETUP.md`](./GITHUB_SECRETS_SETUP.md)
+
+## �📖 API Documentation
+
+### Generate Sprite Endpoint
+```
+POST /api/generate-sprite
+{
+  "prompt": "cute dragon character",
+  "service": "aws" | "azure" | "google"
+}
+```
+
+### Response Format
+```json
+{
+  "success": true,
+  "imageUrl": "data:image/png;base64,<base64_data>",
+  "metadata": {
+    "service": "aws",
+    "prompt": "cute dragon character",
+    "timestamp": "2024-01-01T00:00:00.000Z"
+  }
+}
+```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-- **GitHub Issues**: Report bugs and request features
-- **Documentation**: Check `/docs` folder for detailed guides
-- **Community**: Join discussions in GitHub Discussions
-
-## 🎯 Roadmap
-
-### Recently Completed ✅
-- [x] ComfyUI Local integration with RTX 3050 optimization
-- [x] RTX 3050 6GB memory management and VRAM throttling
-- [x] 3-tier quality system with hardware-aware parameters
-- [x] 8 resolution presets plus custom sizing
-- [x] Extended 20-minute timeout for ultra quality generation
-- [x] Real-time VRAM usage monitoring and estimation
-- [x] Automatic parameter adjustment based on memory constraints
-- [x] Dynamic workflow generation with safety validation
-
-### Near Term 🔄
-- [ ] Multi-GPU ComfyUI support for scaling
-- [ ] ComfyUI workflow templates and custom styles
-- [ ] Advanced prompt engineering tools
-- [ ] Batch generation for multiple sprites
-- [ ] ComfyUI model management interface
-- [ ] Performance analytics and generation history
-
-### Future Features 🔮
-- [ ] RTX 4060/4070 optimization profiles
-- [ ] Cloud ComfyUI integration (RunPod, Lambda Labs)
-- [ ] Sprite animation tools
-- [ ] Team collaboration features
-- [ ] Integration with game engines
-- [ ] Cloud storage options (AWS S3, Google Cloud)
-- [ ] User authentication and profiles
-- [ ] Sprite variation generation
-- [ ] Custom model fine-tuning interface
-
-### Documentation & Guides 📚
-- [x] [ComfyUI Local Setup Guide](../COMFYUI_LOCAL_SETUP.md)
-- [x] [RTX 3050 Optimization Guide](../COMFYUI_RTX3050_OPTIMIZATION_COMPLETE.md)
-- [x] [System Architecture Documentation](./ARCHITECTURE.md)
-- [ ] Video tutorials for ComfyUI setup
-- [ ] Advanced prompt engineering guide
-- [ ] Performance optimization best practices
+- AWS Bedrock for Stable Diffusion models
+- Azure OpenAI for DALL-E 3 integration
+- Google Cloud for Vertex AI capabilities
+- Next.js team for the amazing framework
+- Tailwind CSS for beautiful styling
 
 ---
 
-Built with ❤️ for game developers and kids everywhere!
+**Happy Sprite Creating! 🎮✨**

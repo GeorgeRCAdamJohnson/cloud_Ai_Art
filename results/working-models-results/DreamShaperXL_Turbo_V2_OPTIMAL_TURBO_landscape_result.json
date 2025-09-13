@@ -1,0 +1,42 @@
+{
+  "testId": "DreamShaperXL_Turbo_V2_OPTIMAL_TURBO_landscape",
+  "model": {
+    "filename": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+    "name": "DreamShaperXL_Turbo_V2",
+    "type": "turbo_optimized",
+    "expectedStrength": "speed_quality_balance",
+    "notes": "Known working Turbo model - our baseline",
+    "fileSize": "6.9GB"
+  },
+  "configuration": {
+    "name": "OPTIMAL_TURBO",
+    "description": "Validated optimal turbo settings",
+    "settings": {
+      "steps": 8,
+      "cfg": 2.5,
+      "sampler": "euler_ancestral",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~18s",
+    "purpose": "main_workflow",
+    "bestFor": "turbo"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 20,
+    "actualTimeFormatted": "20s",
+    "expectedTimeSeconds": 18,
+    "perStepSeconds": 2.5,
+    "performanceRating": "EXCELLENT",
+    "efficiency": "HIGH"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL_TURBO",
+    "qualityExpectation": "Clean, efficient - optimal for production (Turbo optimized)",
+    "modelSpecificNotes": "Known working Turbo model - our baseline",
+    "compatibility": "PERFECT"
+  },
+  "timestamp": "2025-09-13T06:17:08.337Z",
+  "success": true
+}

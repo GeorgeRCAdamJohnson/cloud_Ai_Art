@@ -1,0 +1,20 @@
+{
+  "level": 5,
+  "name": "MITIGATION_1536_Conservative",
+  "description": "Conservative settings optimized for quality",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 60,
+    "cfg": 7,
+    "sampler": "dpmpp_2m",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "actualTimeSeconds": 208,
+    "actualTimeFormatted": "3m 28s",
+    "vramUsage": "~5.7GB"
+  },
+  "timestamp": "2025-09-12T16:42:30.381Z",
+  "success": true
+}

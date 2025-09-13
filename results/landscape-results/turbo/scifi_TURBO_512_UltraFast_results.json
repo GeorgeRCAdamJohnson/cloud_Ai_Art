@@ -1,0 +1,33 @@
+{
+  "level": 1,
+  "name": "TURBO_512_UltraFast",
+  "description": "Turbo ultra fast landscape preview",
+  "settings": {
+    "width": 512,
+    "height": 512,
+    "steps": 6,
+    "cfg": 2,
+    "sampler": "euler",
+    "scheduler": "normal"
+  },
+  "expectedTime": "~16s",
+  "use": "rapid_preview",
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "performance": {
+    "actualTimeSeconds": 24,
+    "actualTimeFormatted": "24s",
+    "expectedTimeSeconds": 16,
+    "perStepSeconds": 4,
+    "performanceRating": "GOOD",
+    "vramUsage": "~0GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL",
+    "warningLevel": "none",
+    "qualityExpectation": "Clean, fast generation - no artifacts expected"
+  },
+  "timestamp": "2025-09-13T05:38:41.883Z",
+  "success": true
+}

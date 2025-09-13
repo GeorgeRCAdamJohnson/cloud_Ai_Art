@@ -1,0 +1,33 @@
+{
+  "level": 6,
+  "name": "COMPARISON_SDXL_Base",
+  "description": "SDXL Base comparison (old workflow)",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 30,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "expectedTime": "~90s",
+  "use": "baseline_comparison",
+  "model": "sd_xl_base_1.0.safetensors",
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "performance": {
+    "actualTimeSeconds": 68,
+    "actualTimeFormatted": "1m 8s",
+    "expectedTimeSeconds": 90,
+    "perStepSeconds": 2.27,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.9GB"
+  },
+  "analysis": {
+    "isOptimalRange": "UNKNOWN",
+    "warningLevel": "none",
+    "qualityExpectation": "Unknown quality characteristics"
+  },
+  "timestamp": "2025-09-13T05:50:14.677Z",
+  "success": true
+}

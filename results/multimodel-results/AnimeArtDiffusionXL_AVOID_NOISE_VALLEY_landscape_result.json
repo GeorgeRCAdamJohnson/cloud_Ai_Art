@@ -1,0 +1,40 @@
+{
+  "testId": "AnimeArtDiffusionXL_AVOID_NOISE_VALLEY_landscape",
+  "model": {
+    "filename": "animeArtDiffusionXL_alpha3.safetensors",
+    "name": "AnimeArtDiffusionXL",
+    "type": "anime_specialist",
+    "expectedStrength": "anime_characters",
+    "notes": "Anime specialist - should excel at character generation"
+  },
+  "configuration": {
+    "name": "AVOID_NOISE_VALLEY",
+    "description": "Testing problematic 12-step range",
+    "settings": {
+      "steps": 12,
+      "cfg": 3,
+      "sampler": "dpmpp_2m",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~24s",
+    "purpose": "artifact_validation",
+    "warning": "Expected to show noise/artifacts"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 24,
+    "perStepSeconds": 0.17,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~1GB"
+  },
+  "analysis": {
+    "isOptimalRange": "NOISE_VALLEY",
+    "qualityExpectation": "Expected to show noise/artifacts",
+    "modelSpecificNotes": "Anime specialist - should excel at character generation"
+  },
+  "timestamp": "2025-09-13T06:06:42.144Z",
+  "success": true
+}

@@ -1,0 +1,20 @@
+{
+  "level": 1,
+  "name": "BASELINE_1536_Original",
+  "description": "Original problematic settings",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 120,
+    "cfg": 9.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "actualTimeSeconds": 423,
+    "actualTimeFormatted": "7m 3s",
+    "vramUsage": "~9.4GB"
+  },
+  "timestamp": "2025-09-12T16:19:02.178Z",
+  "success": true
+}

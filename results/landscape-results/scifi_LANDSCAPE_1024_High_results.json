@@ -1,0 +1,22 @@
+{
+  "level": 3,
+  "name": "LANDSCAPE_1024_High",
+  "description": "High quality landscape",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 60,
+    "cfg": 8,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "performance": {
+    "actualTimeSeconds": 102,
+    "actualTimeFormatted": "1m 42s",
+    "vramUsage": "~2.5GB"
+  },
+  "timestamp": "2025-09-13T04:14:55.178Z",
+  "success": true
+}

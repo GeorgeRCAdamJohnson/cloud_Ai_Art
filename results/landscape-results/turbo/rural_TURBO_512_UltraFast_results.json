@@ -1,0 +1,33 @@
+{
+  "level": 1,
+  "name": "TURBO_512_UltraFast",
+  "description": "Turbo ultra fast landscape preview",
+  "settings": {
+    "width": 512,
+    "height": 512,
+    "steps": 6,
+    "cfg": 2,
+    "sampler": "euler",
+    "scheduler": "normal"
+  },
+  "expectedTime": "~16s",
+  "use": "rapid_preview",
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "performance": {
+    "actualTimeSeconds": 22,
+    "actualTimeFormatted": "22s",
+    "expectedTimeSeconds": 16,
+    "perStepSeconds": 3.67,
+    "performanceRating": "GOOD",
+    "vramUsage": "~0GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL",
+    "warningLevel": "none",
+    "qualityExpectation": "Clean, fast generation - no artifacts expected"
+  },
+  "timestamp": "2025-09-13T05:44:47.475Z",
+  "success": true
+}

@@ -1,0 +1,22 @@
+{
+  "level": 5,
+  "name": "LANDSCAPE_1536_Conservative",
+  "description": "Conservative 1536 settings for landscapes",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 60,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "normal"
+  },
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "performance": {
+    "actualTimeSeconds": 223,
+    "actualTimeFormatted": "3m 43s",
+    "vramUsage": "~5.7GB"
+  },
+  "timestamp": "2025-09-13T04:24:26.710Z",
+  "success": true
+}

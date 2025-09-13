@@ -1,0 +1,175 @@
+{
+  "testCompleted": "2025-09-12T17:19:03.647Z",
+  "testType": "DEGRADATION_MITIGATION",
+  "levelsCompleted": 8,
+  "totalLevels": 8,
+  "findings": {
+    "CRITICAL_FAILURE": "All faces severely deformed across all mitigation attempts",
+    "1536x1536_verdict": "UNUSABLE - No mitigation strategy successful",
+    "2048x2048_verdict": "COMPLETELY BROKEN - Avoid entirely", 
+    "root_cause": "SDXL fundamental limitation at high resolution - cannot be fixed with parameter tweaking",
+    "recommendation": "Cap production resolution at 1024x1024 maximum"
+  },
+  "results": [
+    {
+      "level": 1,
+      "name": "BASELINE_1536_Original",
+      "description": "Original problematic settings",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 120,
+        "cfg": 9.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "actualTimeSeconds": 423,
+        "actualTimeFormatted": "7m 3s",
+        "vramUsage": "~9.4GB"
+      },
+      "timestamp": "2025-09-12T16:19:02.178Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "MITIGATION_1536_LowerCFG",
+      "description": "Reduce CFG to prevent over-guidance",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 120,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "actualTimeSeconds": 406,
+        "actualTimeFormatted": "6m 46s",
+        "vramUsage": "~9.4GB"
+      },
+      "timestamp": "2025-09-12T16:26:33.582Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "MITIGATION_1536_FewerSteps",
+      "description": "Reduce steps to prevent convergence issues",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 80,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "actualTimeSeconds": 274,
+        "actualTimeFormatted": "4m 34s",
+        "vramUsage": "~7.5GB"
+      },
+      "timestamp": "2025-09-12T16:31:52.459Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "MITIGATION_1536_BetterSampler",
+      "description": "Use Euler Ancestral for better high-res",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 100,
+        "cfg": 8,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "actualTimeSeconds": 340,
+        "actualTimeFormatted": "5m 40s",
+        "vramUsage": "~9.4GB"
+      },
+      "timestamp": "2025-09-12T16:38:17.686Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "MITIGATION_1536_Conservative",
+      "description": "Conservative settings optimized for quality",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 60,
+        "cfg": 7,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "actualTimeSeconds": 208,
+        "actualTimeFormatted": "3m 28s",
+        "vramUsage": "~5.7GB"
+      },
+      "timestamp": "2025-09-12T16:42:30.381Z",
+      "success": true
+    },
+    {
+      "level": 6,
+      "name": "BASELINE_2048_Original",
+      "description": "2048 original problematic settings",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 150,
+        "cfg": 10,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "performance": {
+        "actualTimeSeconds": 1053,
+        "actualTimeFormatted": "17m 33s",
+        "vramUsage": "~16.8GB"
+      },
+      "timestamp": "2025-09-12T17:00:48.611Z",
+      "success": true
+    },
+    {
+      "level": 7,
+      "name": "MITIGATION_2048_Aggressive",
+      "description": "Aggressive mitigation for 2048x2048",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 50,
+        "cfg": 6.5,
+        "sampler": "euler_ancestral",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "actualTimeSeconds": 381,
+        "actualTimeFormatted": "6m 21s",
+        "vramUsage": "~8.4GB"
+      },
+      "timestamp": "2025-09-12T17:07:54.194Z",
+      "success": true
+    },
+    {
+      "level": 8,
+      "name": "MITIGATION_2048_Moderate",
+      "description": "Moderate mitigation for 2048x2048",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 80,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "performance": {
+        "actualTimeSeconds": 579,
+        "actualTimeFormatted": "9m 39s",
+        "vramUsage": "~13.4GB"
+      },
+      "timestamp": "2025-09-12T17:18:18.608Z",
+      "success": true
+    }
+  ]
+}

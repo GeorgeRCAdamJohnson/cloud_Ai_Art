@@ -1,0 +1,20 @@
+{
+  "level": 4,
+  "name": "MITIGATION_1536_BetterSampler",
+  "description": "Use Euler Ancestral for better high-res",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 100,
+    "cfg": 8,
+    "sampler": "euler_ancestral",
+    "scheduler": "normal"
+  },
+  "performance": {
+    "actualTimeSeconds": 340,
+    "actualTimeFormatted": "5m 40s",
+    "vramUsage": "~9.4GB"
+  },
+  "timestamp": "2025-09-12T16:38:17.686Z",
+  "success": true
+}

@@ -1,0 +1,22 @@
+{
+  "level": 1,
+  "name": "LANDSCAPE_512_Fast",
+  "description": "Fast landscape preview",
+  "settings": {
+    "width": 512,
+    "height": 512,
+    "steps": 25,
+    "cfg": 7,
+    "sampler": "euler",
+    "scheduler": "normal"
+  },
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "performance": {
+    "actualTimeSeconds": 48,
+    "actualTimeFormatted": "48s",
+    "vramUsage": "~0.3GB"
+  },
+  "timestamp": "2025-09-13T04:36:30.783Z",
+  "success": true
+}

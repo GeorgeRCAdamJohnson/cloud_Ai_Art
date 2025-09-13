@@ -1,0 +1,40 @@
+{
+  "testId": "Qwen2VL_AVOID_VERBOSE_VALLEY_landscape",
+  "model": {
+    "filename": "Qwen2VL.safetensors",
+    "name": "Qwen2VL",
+    "type": "multimodal",
+    "expectedStrength": "text_understanding",
+    "notes": "Multimodal model - may have different optimal settings"
+  },
+  "configuration": {
+    "name": "AVOID_VERBOSE_VALLEY",
+    "description": "Testing if 60 steps causes over-processing",
+    "settings": {
+      "steps": 60,
+      "cfg": 8,
+      "sampler": "dpmpp_2m",
+      "scheduler": "karras"
+    },
+    "expectedTime": "~120s",
+    "purpose": "verbose_validation",
+    "warning": "May be overly detailed/verbose"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 120,
+    "perStepSeconds": 0.03,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~5GB"
+  },
+  "analysis": {
+    "isOptimalRange": "VERBOSE_RISK",
+    "qualityExpectation": "May be overly detailed/verbose",
+    "modelSpecificNotes": "Multimodal model - may have different optimal settings"
+  },
+  "timestamp": "2025-09-13T06:04:59.920Z",
+  "success": true
+}

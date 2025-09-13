@@ -1,0 +1,39 @@
+{
+  "testId": "Qwen2VL_OPTIMAL_FAST_landscape",
+  "model": {
+    "filename": "Qwen2VL.safetensors",
+    "name": "Qwen2VL",
+    "type": "multimodal",
+    "expectedStrength": "text_understanding",
+    "notes": "Multimodal model - may have different optimal settings"
+  },
+  "configuration": {
+    "name": "OPTIMAL_FAST",
+    "description": "Validated optimal fast settings",
+    "settings": {
+      "steps": 8,
+      "cfg": 2.5,
+      "sampler": "euler_ancestral",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~18s",
+    "purpose": "main_workflow"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 18,
+    "perStepSeconds": 0.25,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.7GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL_TURBO",
+    "qualityExpectation": "Clean, efficient - optimal for production",
+    "modelSpecificNotes": "Multimodal model - may have different optimal settings"
+  },
+  "timestamp": "2025-09-13T06:09:34.073Z",
+  "success": true
+}

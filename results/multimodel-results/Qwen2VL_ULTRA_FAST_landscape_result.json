@@ -1,0 +1,39 @@
+{
+  "testId": "Qwen2VL_ULTRA_FAST_landscape",
+  "model": {
+    "filename": "Qwen2VL.safetensors",
+    "name": "Qwen2VL",
+    "type": "multimodal",
+    "expectedStrength": "text_understanding",
+    "notes": "Multimodal model - may have different optimal settings"
+  },
+  "configuration": {
+    "name": "ULTRA_FAST",
+    "description": "Ultra fast generation test",
+    "settings": {
+      "steps": 6,
+      "cfg": 2,
+      "sampler": "euler",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~16s",
+    "purpose": "speed_baseline"
+  },
+  "promptType": "landscape",
+  "prompt": "serene mountain landscape, golden hour lighting, misty peaks, concept art style",
+  "performance": {
+    "actualTimeSeconds": 2,
+    "actualTimeFormatted": "2s",
+    "expectedTimeSeconds": 16,
+    "perStepSeconds": 0.33,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.5GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL_TURBO",
+    "qualityExpectation": "Fast generation, acceptable quality",
+    "modelSpecificNotes": "Multimodal model - may have different optimal settings"
+  },
+  "timestamp": "2025-09-13T06:09:00.015Z",
+  "success": true
+}

@@ -1,0 +1,20 @@
+{
+  "level": 2,
+  "name": "MITIGATION_1536_LowerCFG",
+  "description": "Reduce CFG to prevent over-guidance",
+  "settings": {
+    "width": 1536,
+    "height": 1536,
+    "steps": 120,
+    "cfg": 7.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "performance": {
+    "actualTimeSeconds": 406,
+    "actualTimeFormatted": "6m 46s",
+    "vramUsage": "~9.4GB"
+  },
+  "timestamp": "2025-09-12T16:26:33.582Z",
+  "success": true
+}

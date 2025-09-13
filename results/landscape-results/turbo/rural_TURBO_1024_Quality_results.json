@@ -1,0 +1,33 @@
+{
+  "level": 4,
+  "name": "TURBO_1024_Quality",
+  "description": "Turbo quality mode for final outputs",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 60,
+    "cfg": 8,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "expectedTime": "~120s",
+  "use": "portfolio_quality",
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "performance": {
+    "actualTimeSeconds": 102,
+    "actualTimeFormatted": "1m 42s",
+    "expectedTimeSeconds": 120,
+    "perStepSeconds": 1.7,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~1.9GB"
+  },
+  "analysis": {
+    "isOptimalRange": "QUALITY_MODE",
+    "warningLevel": "none",
+    "qualityExpectation": "High quality but slower - should be clean"
+  },
+  "timestamp": "2025-09-13T05:48:02.167Z",
+  "success": true
+}

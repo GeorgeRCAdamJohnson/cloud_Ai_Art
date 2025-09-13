@@ -1,0 +1,285 @@
+{
+  "testCompleted": "2025-09-13T05:28:06.689Z",
+  "testType": "LANDSCAPE_QUALITY_COMPARISON",
+  "scenarios": {
+    "scifi": {
+      "description": "Futuristic sci-fi cityscape, 3/4 isometric, claustrophobic",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style"
+    },
+    "rural": {
+      "description": "Majestic mountain/forest landscape, regal and grand",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style"
+    }
+  },
+  "levelsCompleted": 10,
+  "totalLevels": 12,
+  "findings": {
+    "hypothesis": "Landscapes may handle higher resolutions better than character portraits",
+    "testResolutions": [
+      "512x512",
+      "768x768",
+      "1024x1024",
+      "1536x1536",
+      "2048x2048"
+    ],
+    "keyQuestions": [
+      "Do landscapes avoid the anatomy deformities seen in character tests?",
+      "Can 1536x1536 or 2048x2048 produce usable landscape results?",
+      "Which scenario (sci-fi vs rural) handles high resolution better?"
+    ]
+  },
+  "results": [
+    {
+      "level": 1,
+      "name": "LANDSCAPE_512_Fast",
+      "description": "Fast landscape preview",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 25,
+        "cfg": 7,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 44,
+        "actualTimeFormatted": "44s",
+        "vramUsage": "~0.3GB"
+      },
+      "timestamp": "2025-09-13T04:11:21.604Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "LANDSCAPE_768_Quality",
+      "description": "Balanced landscape quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 40,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 51,
+        "actualTimeFormatted": "51s",
+        "vramUsage": "~0.9GB"
+      },
+      "timestamp": "2025-09-13T04:12:42.823Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "LANDSCAPE_1024_High",
+      "description": "High quality landscape",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 60,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 102,
+        "actualTimeFormatted": "1m 42s",
+        "vramUsage": "~2.5GB"
+      },
+      "timestamp": "2025-09-13T04:14:55.178Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "LANDSCAPE_1536_Test",
+      "description": "Testing 1536 for landscapes (may work better than characters)",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 80,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 289,
+        "actualTimeFormatted": "4m 49s",
+        "vramUsage": "~7.5GB"
+      },
+      "timestamp": "2025-09-13T04:20:14.037Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "LANDSCAPE_1536_Conservative",
+      "description": "Conservative 1536 settings for landscapes",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 60,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 223,
+        "actualTimeFormatted": "3m 43s",
+        "vramUsage": "~5.7GB"
+      },
+      "timestamp": "2025-09-13T04:24:26.710Z",
+      "success": true
+    },
+    {
+      "level": 6,
+      "name": "LANDSCAPE_2048_Test",
+      "description": "Testing 2048 for landscapes (experimental)",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 80,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "scifi",
+      "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+      "performance": {
+        "actualTimeSeconds": 616,
+        "actualTimeFormatted": "10m 16s",
+        "vramUsage": "~13.4GB"
+      },
+      "timestamp": "2025-09-13T04:35:12.584Z",
+      "success": true
+    },
+    {
+      "level": 1,
+      "name": "LANDSCAPE_512_Fast",
+      "description": "Fast landscape preview",
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 25,
+        "cfg": 7,
+        "sampler": "euler",
+        "scheduler": "normal"
+      },
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "performance": {
+        "actualTimeSeconds": 48,
+        "actualTimeFormatted": "48s",
+        "vramUsage": "~0.3GB"
+      },
+      "timestamp": "2025-09-13T04:36:30.783Z",
+      "success": true
+    },
+    {
+      "level": 2,
+      "name": "LANDSCAPE_768_Quality",
+      "description": "Balanced landscape quality",
+      "settings": {
+        "width": 768,
+        "height": 768,
+        "steps": 40,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "performance": {
+        "actualTimeSeconds": 51,
+        "actualTimeFormatted": "51s",
+        "vramUsage": "~0.9GB"
+      },
+      "timestamp": "2025-09-13T04:37:51.989Z",
+      "success": true
+    },
+    {
+      "level": 3,
+      "name": "LANDSCAPE_1024_High",
+      "description": "High quality landscape",
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 60,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "performance": {
+        "actualTimeSeconds": 106,
+        "actualTimeFormatted": "1m 46s",
+        "vramUsage": "~2.5GB"
+      },
+      "timestamp": "2025-09-13T04:40:07.548Z",
+      "success": true
+    },
+    {
+      "level": 4,
+      "name": "LANDSCAPE_1536_Test",
+      "description": "Testing 1536 for landscapes (may work better than characters)",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 80,
+        "cfg": 8,
+        "sampler": "dpmpp_2m",
+        "scheduler": "karras"
+      },
+      "scenario": "rural",
+      "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+      "performance": {
+        "actualTimeSeconds": 355,
+        "actualTimeFormatted": "5m 55s",
+        "vramUsage": "~7.5GB"
+      },
+      "timestamp": "2025-09-13T04:46:32.467Z",
+      "success": true
+    },
+    {
+      "level": 5,
+      "name": "LANDSCAPE_1536_Conservative",
+      "description": "Conservative 1536 settings for landscapes",
+      "settings": {
+        "width": 1536,
+        "height": 1536,
+        "steps": 60,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "rural",
+      "success": false,
+      "error": "Generation timeout"
+    },
+    {
+      "level": 6,
+      "name": "LANDSCAPE_2048_Test",
+      "description": "Testing 2048 for landscapes (experimental)",
+      "settings": {
+        "width": 2048,
+        "height": 2048,
+        "steps": 80,
+        "cfg": 7.5,
+        "sampler": "dpmpp_2m",
+        "scheduler": "normal"
+      },
+      "scenario": "rural",
+      "success": false,
+      "error": "Generation timeout"
+    }
+  ]
+}

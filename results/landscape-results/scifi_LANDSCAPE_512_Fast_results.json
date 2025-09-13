@@ -1,0 +1,22 @@
+{
+  "level": 1,
+  "name": "LANDSCAPE_512_Fast",
+  "description": "Fast landscape preview",
+  "settings": {
+    "width": 512,
+    "height": 512,
+    "steps": 25,
+    "cfg": 7,
+    "sampler": "euler",
+    "scheduler": "normal"
+  },
+  "scenario": "scifi",
+  "prompt": "futuristic sci-fi cityscape, 3/4 isometric angle, towering skyscrapers, neon lights, flying vehicles, cyberpunk atmosphere, dense urban environment, claustrophobic feeling, dramatic lighting, concept art style",
+  "performance": {
+    "actualTimeSeconds": 44,
+    "actualTimeFormatted": "44s",
+    "vramUsage": "~0.3GB"
+  },
+  "timestamp": "2025-09-13T04:11:21.604Z",
+  "success": true
+}

@@ -1,0 +1,33 @@
+{
+  "level": 3,
+  "name": "TURBO_1024_Fast",
+  "description": "Turbo fast at full resolution",
+  "settings": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 8,
+    "cfg": 2.5,
+    "sampler": "euler_ancestral",
+    "scheduler": "normal"
+  },
+  "expectedTime": "~25s",
+  "use": "production_ready",
+  "scenario": "rural",
+  "prompt": "majestic mountain landscape with ancient forest, regal and grand vista, misty peaks, towering pine trees, golden hour lighting, epic fantasy environment, serene and powerful atmosphere, concept art style",
+  "model": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+  "performance": {
+    "actualTimeSeconds": 18,
+    "actualTimeFormatted": "18s",
+    "expectedTimeSeconds": 25,
+    "perStepSeconds": 2.25,
+    "performanceRating": "EXCELLENT",
+    "vramUsage": "~0.3GB"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL",
+    "warningLevel": "none",
+    "qualityExpectation": "Clean, fast generation - no artifacts expected"
+  },
+  "timestamp": "2025-09-13T05:45:59.687Z",
+  "success": true
+}

@@ -1,0 +1,42 @@
+{
+  "testId": "DreamShaperXL_Turbo_V2_ULTRA_FAST_TURBO_character",
+  "model": {
+    "filename": "DreamShaperXL_Turbo_V2-SFW.safetensors",
+    "name": "DreamShaperXL_Turbo_V2",
+    "type": "turbo_optimized",
+    "expectedStrength": "speed_quality_balance",
+    "notes": "Known working Turbo model - our baseline",
+    "fileSize": "6.9GB"
+  },
+  "configuration": {
+    "name": "ULTRA_FAST_TURBO",
+    "description": "Ultra fast turbo settings",
+    "settings": {
+      "steps": 6,
+      "cfg": 2,
+      "sampler": "euler",
+      "scheduler": "normal"
+    },
+    "expectedTime": "~16s",
+    "purpose": "speed_baseline",
+    "bestFor": "turbo"
+  },
+  "promptType": "character",
+  "prompt": "beautiful anime character, detailed face, expressive eyes, colorful hair, modern clothing, high quality digital art",
+  "performance": {
+    "actualTimeSeconds": 40,
+    "actualTimeFormatted": "40s",
+    "expectedTimeSeconds": 16,
+    "perStepSeconds": 6.67,
+    "performanceRating": "SLOW",
+    "efficiency": "HIGH"
+  },
+  "analysis": {
+    "isOptimalRange": "OPTIMAL_TURBO",
+    "qualityExpectation": "Fast generation, acceptable quality (Turbo optimized)",
+    "modelSpecificNotes": "Known working Turbo model - our baseline",
+    "compatibility": "PERFECT"
+  },
+  "timestamp": "2025-09-13T06:15:39.914Z",
+  "success": true
+}
